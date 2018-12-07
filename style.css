@@ -1,0 +1,1523 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-06-22 20:40:19
+ * @version $Id$
+ */
+/*第一个快元素和第二个块元素下的线*/
+*{
+    /*overflow:hidden;*/
+}
+
+
+
+/*顶部的样式*/
+.style-a{
+    background-color:#191655;
+    width:100%;
+    height:40px;
+    line-height:40px;
+    position:relative;
+    border-bottom:1px solid #182560;
+    overflow:hidden;
+}
+/*logo的样式*/
+.style-logo{
+    width:90px;
+    height:23px;
+    cursor:pointer;
+
+}
+.style-logo-center{
+   position:relative;
+   left:-109px;
+   bottom:2px;
+   cursor:pointer;
+
+}
+/*结束*/
+.style-a>img{
+    float:left;
+}
+.style-a>span{
+    color:white;
+    float:left;
+    cursor:pointer;
+}
+.style-aa{
+    float:right;
+}
+.style-aa li{
+    float:left;
+    margin-left:20px;
+}
+.style-aa>li a{
+    color:white;
+    font-size:15px;
+}
+.style-logo{
+    margin-left:10px;
+    margin-top:8px;
+}
+.logo-ab,.logo-ac,.logo-ad{
+    vertical-align:-7px;
+}
+.logo-ab{
+    margin-left:-25px;
+   
+}
+.style-ab{
+    height:23px;
+    background-color: #35316a;
+    color:white;
+    border:1px solid #35316a;
+}
+/*第一个块元素伪类的开始*/
+.style-aa li a:hover{
+    color:orange;
+
+}
+.style-ab-a{
+    width:360px;
+}
+/*伪类选择器的结束*/
+/*第二个块元素的样式*/
+.style-b{
+    background-color:#181d5b;
+    height:62px;
+    width:100%;
+}
+.style-b-img{
+    float:left;
+    margin-top:22px;
+    margin-left:15px;
+}
+.style-ba{
+    float:left;
+}
+.style-ba li{
+    float:left;
+    margin-left:20px;
+    
+}
+.style-ba li a{
+    line-height:60px;
+    color:white;
+    font-size:15px;
+    
+}
+.style-bb{
+    float:right;
+    color:white;
+    width:120px;
+    height:60px;
+    text-align:center;
+    background-color:#00c1de;
+    border:1px solid #181d5b;;
+    cursor:pointer;
+    
+}
+/*第二个块元素中的伪类*/
+.style-ba li a:hover{
+    color:orange;
+}
+
+/*伪类选择器的结束*/
+
+/*第三个块元素的样式*/
+.style-c{
+    background-image:url(../imgs/1.jpg);
+    background-size:100%;
+    cursor:pointer;
+}
+.style-ca{
+    margin:0 auto;
+    width:1200px;
+    height:416px;
+    position:relative;
+
+}
+.style-ca>a{
+    color:white;
+    font-size:50px;
+    margin-top:70px;
+    margin-left:10px;
+    display:inline-block;
+    text-decoration:none;
+    overflow:hidden;
+}
+.style-ca>span{
+    color:white;
+    font-size:20px;
+    line-height:70px;
+    margin-left:10px;
+    overflow:hidden;
+
+    
+}
+.style-ca>input{
+    color:white;
+    width:122px;
+    height:40px;
+    background-color:#134f80;
+    border:1px solid white;
+    margin-top:50px;
+    margin-left:10px;
+    cursor:pointer;
+    
+
+}
+.style-ca>ul{
+    display:flex;
+    position:absolute;
+    right:35%;
+    top:90%;
+}
+.style-ca>ul li{
+    width:50px;
+    height:5px;
+    margin-left:5px;
+    background-color: rgba(218, 218, 218, 0.58);
+    display:block;
+
+}
+.style-ca>ul li.left-ca{
+    background-color:white;
+}
+
+/*第三个块元素中的伪类开始*/
+.style-ca>input:hover{
+    background-color:white;
+    color:#134f80;
+}
+
+/*第三个块元素的结束*/
+
+/*第四个块元素的样式*/
+.style-d{
+    width: 100%;
+    background-color:#2786a8;
+}
+.style-da{
+    width:1200px;
+    height:125px;
+    margin:0 auto;
+    
+    /*border:1px solid red;*/
+
+}
+.style-db{
+    height:135px;
+}
+.style-db li{
+    width:212px;
+    height:115px;
+    float:left;
+    padding-left:28px;
+    padding-top:10px;                                                     
+    line-height:25px;
+    position:relative;
+    cursor:pointer;
+}
+.style-db li>a{
+    color:white;
+    font-weight:bolder;
+}
+.style-db li>span{
+    color:#97c6d6;
+    font-size:10px;
+    display:inline-block;
+    width:155px;
+    height:40px;
+}
+
+/*伪类选择器的开始*/
+
+.left:after{
+    content: "";
+    width:1px;
+    height:125px;
+    background-color:#b2b2b2;
+    top: 20px;
+    left: 0;
+    position: absolute;
+    left:-2px;
+    top:0;
+    
+}
+.right:before{
+    content: "";
+    width:1px;
+    height:125px;
+    background-color:#b2b2b2;
+    top: 20px;
+    right: 0;
+    position: absolute;
+    right:-2px;
+    top:0;
+}
+.style-db li:hover{
+    background-color:#55a8cc;
+
+}
+/*伪类选择器的结束*/
+
+/*第五个块元素的样式*/
+.style-e{
+    width:1200px;
+    margin:0 auto;
+    
+    
+}
+.style-e>img{
+    padding-top:28px;
+    display:block;
+    margin:0 auto;
+}
+.style-e>span{
+    margin-top:10px;
+    display:block;
+    text-align:center;
+    font-size:8px;
+    font-weight:bolder;
+}
+.style-e>h2{
+    margin-top:28px;
+    text-align:center;
+    font-size:20px;
+
+}
+.style-e>h3{
+    margin-top:15px;
+    margin-bottom:70px;
+    text-align:center;
+    font-size:15px;
+}
+.style-ea{
+    width:1200px;
+    height:120px;
+    margin:0 auto;
+}
+.style-ea li{
+    float:left;
+    width:75px;
+    height:87px;
+    text-align:center;
+    margin-right:100px;
+    margin-left:50px;
+
+}
+.style-ea li>span{
+    font-size:14px;
+    display:inline-block;
+
+    
+}
+/*第五个块元素中的精灵图*/
+.style-eaa>a{
+    width:53px;
+    height:52px;
+    background-image:url(../img/云.png);
+    background-position:-2px 0px;
+    display:inline-block;
+    
+}
+.style-eab>a{
+    width:53px;
+    height:52px;
+    background-image:url(../img/云.png);
+    background-position:-62px 0px;
+    display:inline-block;
+    
+    
+}
+.style-eac>a{
+    width:53px;
+    height:52px;
+    background-image:url(../img/云.png);
+    background-position:-117px 0px;
+    display:inline-block;
+
+}
+.style-ead>a{
+    width:53px;
+    height:52px;
+    background-image:url(../img/云.png);
+    background-position:-177px 0px;
+    display:inline-block;
+
+}
+.style-eae>a{
+    width:53px;
+    height:52px;
+    background-image:url(../img/云.png);
+    background-position:-231px 0px;
+    display:inline-block;
+
+}
+/*鼠标移动的时候出现的图片*/
+.style-eaa>a>span{
+    width:53px;
+    height:52px;
+    background-image:url(../img/yunzz-1.png);
+    background-position:-2px 0px;
+    display:inline-block;
+    display:none;
+}
+
+.style-eab>a>span{
+    width:53px;
+    height:52px;
+    background-image:url(../img/yunzz-1.png);
+    background-position:-62px 0px;
+    display:inline-block;
+    display:none;
+}
+
+.style-eac>a>span{
+    width:53px;
+    height:52px;
+    background-image:url(../img/yunzz-1.png);
+    background-position:-117px 0px;
+    display:inline-block;
+    display:none;
+}
+
+.style-ead>a>span{
+    width:53px;
+    height:52px;
+    background-image:url(../img/yunzz-1.png);
+    background-position:-177px 0px;
+    float:left;
+    display:none;
+}
+
+.style-eae>a>span{
+    width:53px;
+    height:52px;
+    background-image:url(../img/yunzz-1.png);
+    background-position:-231px 0px;
+    display:inline-block;
+    display:none;
+}
+/*精灵图的结束*/
+
+/*第五个块元素中的伪类的开始*/
+.style-ea li>a:hover span{
+    display:inline-block;
+}
+.style-ea li:hover span{
+    color:#33cde5;
+}
+/*第五个块元素样式的结束*/
+
+/*第六个块元素的样式开始*/
+.style-f{
+    background-color:#f5f5f6;
+
+}
+.style-fa{
+    width:1200px;
+    height:400px;
+    margin:0 auto;
+
+}
+.style-fa ul{
+    margin-right:150px;
+    margin-top:20px;
+    display:inline-block;
+    width:240px;
+    height:390px;
+}
+/*第六个块元素左边的样式*/
+.style-fb{
+    padding-top:15px;
+}
+.style-fb li{
+    line-height:25px;
+    margin-bottom:50px;
+}
+.style-fb li>a{
+    color:black;
+    font-weight:bold;
+    display:block;
+    font-size:20px;
+    text-decoration:none;
+}
+.style-fb li>span{
+    color:#9b9ea0;
+    font-size:12px;
+}
+.style-fb li>input{
+    width:100px;
+    height:30px;
+    text-align:center;
+    background-color:#f5f5f6;
+    border:1px solid black;
+    cursor:pointer;
+
+}
+
+/*左边的伪类*/
+.style-fb li>input:hover{
+    color:#33cde5;
+}
+.style-fb li>a:hover{
+    color:#33cde5;
+}
+/*伪类的结束*/
+/*第六个块元素中间的样式*/
+.style-fc{
+    margin-bottom:30px;
+}
+.style-fc li{
+    padding-top:10px;
+    padding-left:5px;
+    width:350px;
+    height:60px;
+    cursor:pointer;
+}
+.style-fc li>a{
+    color:black;
+    display:block;
+    font-size:16px;
+    
+    text-decoration:none;
+}
+.style-fc li>span{
+    color:#9b9ea0;
+    font-size:12px;
+}
+
+
+/*第六块元素中间的伪类*/
+.style-fc li:hover{
+    background-color:#fff;
+    box-shadow:2px 2px 5px #5a5555;
+
+
+}
+/*伪类的结束*/
+/*第六个块元素右边的样式*/
+.style-fd{
+    margin-bottom:30px;
+}
+.style-fd li{
+    padding-top:10px;
+    padding-left:5px;
+    width:350px;
+    height:60px;
+    cursor:pointer;
+}
+.style-fd li>a{
+    color:black;
+    display:block;
+    font-size:16px;
+    
+    text-decoration:none;
+}
+.style-fd li>span{
+    color:#9b9ea0;
+    font-size:12px;
+}
+/*第六个块元素右边的伪类*/
+.style-fd li:hover{
+    background-color:#fff;
+    box-shadow:2px 2px 5px #5a5555;
+
+
+}
+/*伪类的结束*/
+
+/*第七个块元素的样式 */
+.style-g{
+    width:1200px;
+    margin:0 auto;
+}
+.style-ga{
+    height:375px;
+}
+.style-ga li{
+    float:left;
+    width:112px;
+    height:90px;
+    margin-left:100px;
+    margin-top:40px;
+    cursor:pointer;
+    text-align: center;
+}
+.style-ga li>span{
+    font-size:14px;
+    display:block;
+    text-align:center;
+    
+    }
+
+/*第七个块元素的精灵图*/
+.style-gaa>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:1px 0px;
+    display:inline-block;
+}
+.style-gab>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-54px 0px;
+    display:inline-block;
+}
+.style-gac>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-107px 0px;
+    display:inline-block;
+}
+.style-gad>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-169px 0px;
+    display:inline-block;
+}
+.style-gae>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-226px 0px;
+    display:inline-block;
+}
+.style-gaf>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:0px -55px;
+    display:inline-block;
+}
+.style-gag>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-59px -53px;
+    display:inline-block;
+}
+.style-gah>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-112px -53px;
+    display:inline-block;
+}
+.style-gai>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-168px -56px;
+    display:inline-block;
+}
+.style-gal>a{
+    width:52px;
+    height:52px;
+    background-image:url(../img/yun（7）.png);
+    background-position:-227px -53px;
+    display:inline-block;
+}
+.style-gb{
+    display:block;
+    width:120px;
+    height:40px;
+    margin:0 auto;
+}
+.style-gb input{
+    width:120px;
+    height:40px;
+    text-align:center;
+    border:1px solid black;
+    cursor:pointer;
+}
+
+/*第七个块元素精灵图的结束*/
+/*第七个块元素的伪类*/
+.style-ga li:hover span{
+    color:#33cde5;
+}
+.style-gb:hover input{
+    color:#33cde5;
+    border:1px solid #33cde5;
+}
+
+/*第七个块元素的结束*/
+/*第八个块元素的样式*/
+/*大致的*/
+.style-h{
+    width:100%;
+    background-color:#373d41;
+    margin-top:50px;
+    margin-bottom: 50px;
+}
+.style-ha{
+    width:1440px;
+    height:420px;
+    margin:0 auto;
+    
+}
+.style-hb{
+    height:420px;
+}
+.style-hb li{
+    float:left;
+    position:relative;
+    text-align:center;
+    cursor:pointer;  
+}
+.style-hb li>img{
+    width:280px;
+    height:420px;
+}
+.style-hb li>h2{
+    position:absolute;
+    top:240px;
+    width:280px;
+    height:40px;
+    display:block;
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+    color:white;
+    z-index:1;
+
+}
+.style-hb li>span{
+    font-size:13px;
+    width:240px;
+    position:absolute;
+    top:250px;
+    left:15px;
+    color:white;
+    z-index:-1;
+    
+}
+.style-hb li>input{
+    width:120px;
+    height:40px;
+    /*text-align:center;*/
+    border:1px solid black;
+    cursor:pointer;
+    background-color:#33cde5;
+    border:1px solid white;
+    position:absolute;
+    top:350px;
+    left:70px;
+    z-index:-1;
+    
+}
+.style-hb li>div{
+    width:280px;
+    height:420px;
+    background-color:#00c1de;
+    opacity:0.7;
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:none;
+}
+/*第八个块元素中的精灵图*/
+.style-hb li>a{
+    display:inline-block;
+    width:135px;
+    height:135px;
+    position:absolute;
+    top:40px;
+    left:75px;
+    z-index:1;
+
+}
+.style-hba{
+    background-image:url(../img/方案1.png);
+}
+.style-hbb{
+    background-image:url(../img/方案2.png);
+}
+.style-hbc{
+    background-image:url(../img/方案3.png);
+}
+.style-hbd{
+    background-image:url(../img/方案4.png);
+}
+.style-hbe{
+    background-image:url(../img/方案5.png);
+}
+/*精灵图的结束*/
+/*第八个块元素中的伪类*/
+.style-hb li:hover div{
+    display:block;
+    transition: all 0.3s;
+}
+.style-hb li:hover span{
+    display:block;
+    z-index:1;
+    position:absolute;
+    top:220px;
+    transition: all 0.3s;
+}
+.style-hb li:hover input{
+    /*display:block;*/
+    z-index:1;
+    position:absolute;
+    top:290px;
+    transition: all 0.3s;
+    
+}
+.style-hb li:hover a{
+    display:block;
+    position:absolute;
+    top:10px;
+    transition: all 0.3s;
+}
+.style-hb li:hover h2{
+    display:block;
+    position:absolute;
+    top:150px;
+    transition: all 0.3s;
+}
+.styl-hb li>input:hover{
+    background-color:white;
+    color:#00c1de;
+    z-index:1.1;
+}
+/*第九个块元素的样式*/
+.style-i{
+    width:1100px;
+    height:700px;
+    margin:0 auto;
+}
+.style-i>a{
+    text-decoration:none;
+}
+.style-ia{
+    text-align:center;
+    font-size:20px;
+    cursor:pointer;
+}
+.style-ib{
+    
+    display:block;
+    text-align:center;
+    font-size:14px;
+    color:black;
+    margin-top:20px;
+    margin-bottom:90px;
+    
+}
+.style-ic{
+    width:1080px;
+    height:400px;
+    margin:0 auto;
+    
+}
+.style-ic li{
+    float:left;
+    width:295px;
+    height:170px;
+    margin-left:60px;
+    margin-top:50px;
+    cursor:pointer;
+}
+.style-ic li>a{
+    display:block;
+    margin:0 auto;
+}
+.style-ic li>p{
+    text-align:center;
+    margin-top:10px;
+    font-size:20px;
+    font-weight:bold;
+    
+}
+.style-ic li>span{
+    margin-top:20px;
+    margin-left:20px;
+    display:inline-block;
+    width:255px;
+    height:150px;
+    text-align:center;
+    font-size:12px;
+    color:#9b9ea0;
+    
+}
+/*第九个块元素中的精灵图*/
+.style-ica>a{
+    width:60px;
+    height:52px;
+    background-image:url(../img/yun-i-1.png);
+    background-position:-1px -3px;
+
+}
+.style-icb>a{
+    background-image:url(../img/yun-i-1.png);
+    background-position:-64px 1px;
+    width:60px;
+    height:52px;
+
+}
+.style-icc>a{
+    background-image:url(../img/yun-i-1.png);
+    background-position:-124px -1px;
+    width:60px;
+    height:52px;
+
+}
+.style-icd>a{
+    background-image:url(../img/yun-i-1.png);
+    background-position:-181px -1px;
+    width:60px;
+    height:52px;
+
+}
+.style-ice>a{
+    background-image:url(../img/yun-i-15.png);
+    background-position:0px 0px;
+    width:57px;
+    height:41px;
+
+}
+.style-icf>a{
+    background-position:0px 0px;background-image:url(../img/yun-i-6.png);
+    width:55px;
+    height:52px;
+
+}
+/*第九个块元素中精灵图的结束*/
+/*第九个块元素中的伪类*/
+.style-ic li:hover{
+    color:#33cde5;
+}
+.style-i>a:hover{
+    color:#33cde5;
+}
+/*第九个伪类的结束*/
+/*第十个块元素的样式*/
+.style-j{
+    /*width:100%;*/
+    background:#f5f5f5;
+}
+.style-ja{
+    width:1200px;
+    margin:0 auto;
+}
+.style-jb{
+    text-align:center;
+    font-size:25px;
+    font-weight:normal;
+    padding-top:100px;
+
+}
+.style-jba{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+}
+.style-ja a{
+    text-decoration:none;
+    color:black;
+
+}
+/*第十个块元素中上面的内容样式*/
+
+.style-jc{
+    margin-top:60px;
+
+}
+.style-jc li{
+    width:378px;
+    height:225px;
+    background-color:white;
+    border:1px solid #33cde5;
+    display:inline-block;
+    margin-left:10px;
+    cursor:pointer;
+    overflow:hidden;
+}
+.style-jc li>img{
+    width:378px;
+    height:172px;
+    
+}
+.style-jc li>a{
+    font-size:15px;
+    line-height:40px;
+
+}
+/*第十个块元素下面的样式*/
+.style-jd{
+    margin-top:40px;
+}
+.style-jd li{
+    display:inline-block;
+    width:395px;
+    height:50px;
+    font-size:15px;
+    cursor:pointer;
+
+
+}
+/*第十个块元素中的伪类*/
+.style-ja a:hover{
+    color:#33cde5;
+}
+.style-jc li:hover{
+    box-shadow: 0px 1px 1px #5a5555;
+
+}
+.style-ja li>img:hover {
+    transition: all 0.6s;
+    transform:scale(1.1);
+}
+/*伪类的结束*/
+/*第十一个块元素的样式上面的横条*/
+.style-k-top{
+    width:100%;
+    height:100px;
+    background-image:url(../img/阿里云截图_02.png);
+}
+.style-k-top>a{
+    color:white;
+    font-size:25px;
+    text-decoration:none;
+    display:block;
+    text-align:center;
+    padding-top:30px;
+}
+/*上面横条的结束*/
+/*横条下面的内容*/
+.style-ka{
+    margin-bottom:40px;
+}
+.style-ka>h2{
+    text-align:center;
+    font-size:28px;
+    font-weight:normal;
+    margin-top:100px;
+}
+.style-ka>a{
+    color:black;
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    text-decoration:none;
+}
+/*伪类的开始-大地图上面的a标签*/
+.style-ka>a:hover{
+    color:#33cde5;
+}
+/*伪类的结束*/
+/*地图的样式*/
+.style-kb{
+    width:1200px;
+    height:500px;
+    margin:0 auto;
+    background-image:url(../img/阿里云截图_27.png);
+}
+
+/*地图下面的四个小块元素的样式*/
+.style-kc{
+    width:940px;
+    height:52px;
+    margin:0 auto;
+}
+.style-kca{
+    margin-top:20px;
+}
+.style-kca li{
+    width:200px;
+    height:50px;
+    display:inline-block;
+    margin-left:30px;
+    cursor:pointer;
+}
+.style-kca li>a{
+    display:inline;
+    color:#373d41;
+    font-size:13px;
+    text-decoration:none;
+}
+.style-kca li>span{
+    
+    vertical-align:-12px;
+}
+/*精灵图的开始*/
+.style-kcba{
+    width:50px;
+    height:30px;
+    background-image:url(../img/yun（全）.png);
+    background-position:2px -125px;
+    display:inline-block;
+
+}
+.style-kcbb{
+    width:50px;
+    height:50px;
+    background-image:url(../img/yun（全）.png);
+    background-position:-70px -135px;
+    display:inline-block;
+}
+.style-kcbc{
+    width:50px;
+    height:50px;
+    background-image:url(../img/yun（全）.png);
+    background-position:8px -155px;
+    display:inline-block;
+}
+.style-kcbd{
+    width:50px;
+    height:50px;
+    background-image:url(../img/yun（全）.png);
+    background-position:8px -203px;
+    display:inline-block;
+}
+/*精灵图的结束图*/
+/*下面五个小图标的样式*/
+.style-kd{
+    width:1200px;
+    height:240px;
+    margin:0 auto;
+}
+.style-kda{
+    text-align:center;
+    font-size:25px;
+    font-weight:normal;
+    margin-top:100px;
+}
+.style-kd>a{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    color:black;
+    padding-top:30px;
+}
+.style-kdb{
+    margin-top:70px;
+}
+.style-kdb li{
+    display:inline-block;
+    
+    margin-right:130px; 
+}
+/*五个精灵图*/
+.style-kdba{
+    width:75px;
+    height:50px;
+    background-image:url(../img/yun（全）.png);
+    background-position:-52px -184px;
+
+}
+.style-kdbb{
+    width:85px;
+    height:50px;
+    background-image:url(../img/yun（全）.png);
+    background-position:-52px -230px;
+}
+.style-kdbc{
+    width:95px;
+    height:65px;
+    background-image:url(../img/yun（全）.png);
+    background-position:5px -279px;
+}
+.style-kdbd{
+    width:130px;
+    height:50px;
+    background-image:url(../img/yun（全）.png);
+    background-position:-101px -284px;
+
+}
+.style-kdbe{
+    width:130px;
+    height:40px;
+    background-image:url(../img/yun（全）.png);
+    background-position:-226px -281px;
+}
+/*精灵图的结束*/
+/*五个小图标中伪类*/
+.style-kd>a:hover{
+    color:#33cde5;
+}
+/*伪类的结束*/
+/*底部上面的块元素*/
+.style-ke{
+    margin-top:70px;
+    background-image:url(../img/阿里云截图_02.png);
+}
+.style-kea{
+    width:1200px;
+    height:200px;
+    margin:0 auto;
+}
+.style-kea>h2{
+    padding-top:30px;
+    color:white;
+    font-size:30px;
+    text-align:center;
+}
+.style-kea>a{
+    display:block;
+    width:120px;
+    margin:0 auto;
+    text-decoration:none;
+    margin-top:40px;
+
+}
+.style-kea>a>input{
+    width:120px;
+    height:35px;
+    text-align:center;
+    color:white;
+    background:none;
+    border:1px solid white;
+    display:block;
+}
+/*底部上面的伪类*/
+.style-kea>a:hover input{
+    color:#33cde5;
+    background-color:white;
+    cursor:pointer;
+}
+/*底部上面的块元素的结束*/
+/*底部的块元素的样式*/
+.style-l{
+    background-color:#373d41;
+    width:100%;
+    
+}
+
+/*底部上面的样式*/
+.style-la{
+    width:1200px;
+    height:400px;
+    margin:0 auto;
+    position:relative;
+}
+.style-la a{
+    color:#9b9ea0;
+    font-size:14px;
+    text-decoration:none;
+    
+}
+/*底部上面的的hover伪类*/
+
+.style-la a:hover{
+    color:#33cde5;
+}
+
+/*底部上面左边的精灵图*/
+.style-la>span{
+    width:44px;
+    height:49px;
+    display:inline-block;
+    background-image:url(../img/yun（全）.png);
+    background-position:-384px -231px;
+    position:absolute;
+    top:50px;
+    left:20px;
+
+    
+    }
+
+/*上面左边的样式*/
+.style-lb{
+    width:320px;
+    height:340px;
+    float:left;
+    margin-top:30px;
+    
+    
+}
+.style-lb li{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+
+}
+.style-lb li:nth-child(1)>a{
+    font-weight:bold;
+    font-size:16px;
+}
+.style-lb li:nth-child(1)>p{
+    font-size:22px;
+    color:#9b9ea0;
+    margin-top:10px;
+}
+
+/*上面右边的样式*/
+.style-lba{
+    width:850px;
+    height:360px;
+    display:inline-block;
+    margin-top:30px;
+
+}
+.style-lba ul{
+    float:left;
+    width:130px;
+    height:320px;
+    margin-left:40px;
+    
+}
+.style-lba li>a{
+    display:inline-block;
+    width:130px;
+    height:30px;
+}
+.style-lba ul li:nth-child(1)>a{
+    font-weight:bold;
+    font-size:16px;
+}
+
+/*底部上面伪类的开始*/
+.bottom-right:after{
+    content: "";
+    width:1150px;
+    height:1px;
+    background-color:#4b5054;
+    top: 20px;
+    right: 0;
+    position: absolute;
+    left:10px;
+    top:400px;
+}
+.bottom-right:before{
+    content: "";
+    width:1px;
+    height:340px;
+    background-color:#4b5054;
+    top: 20px;
+    right: 0;
+    position: absolute;
+    left:300px;
+    top:30px;
+}
+/*底部上面的伪类结束*/
+/*底部中间的样式*/
+.style-lh{
+    width:1200px;
+    position:relative;
+    padding-top:30px;
+    padding-left:20px;
+    margin:0 auto;
+    
+}
+.style-lh a{
+    
+    color:#9b9ea0;
+    font-size:14px;
+    text-decoration:none;
+}
+.style-lh ul{
+    
+    display:inline-block;
+    width:1200px;
+    height:35px;
+}
+.style-lh ul li{
+    width:100px;
+    height:35px;
+    margin-left:7px;
+    display:inline-block;
+}
+.stylr-lh ul li>a{
+    display:inline-block;
+
+}
+.style-lh ul li:nth-child(1)>a{
+    font-weight:bold;
+    font-size:15px;
+    width:80px;
+    margin-left:10px;
+}
+.style-lhb li:nth-child(10){
+    width:130px;
+}
+/*底部中间的伪类开始*/
+.style-lh a:hover{
+    color:#33cde5;
+}
+.bottom-center:after{
+    content: "";
+    width:1150px;
+    height:1px;
+    background-color:#4b5054;
+    top: 20px;
+    right: 0;
+    position: absolute;
+    left:17px;
+    top:150px;
+}
+
+/*底部下面的样式*/
+.style-li a{
+    color:#9b9ea0;
+    
+    text-decoration:none;
+}
+.style-li{
+    width:1200px;
+    margin:0 auto;
+    padding-top:50px;
+}
+.style-li ul li{
+    display:inline-block;
+}
+.style-lia{
+    margin-top:20px;
+}
+.style-lia li{
+    margin-left:40px;
+    
+}
+.style-lia li:nth-child(1){
+    margin-left:0px;
+}
+.style-lib{
+    margin-top:60px;
+}
+.style-lib li{
+    margin-left:10px;
+    font-size:14px;
+}
+.style-lib li:nth-child(1){
+    margin-left:0px;
+}
+/*底部中间的伪类开始*/
+.style-li a:hover{
+    color:#33cde5;
+}
+
+
+/*底部中间样式的结束*/
+/*底部下面样式的开始*/
+.style-lj{
+    width:1200px;
+    margin:0 auto;
+    padding-top:20px;
+}
+.style-lja{
+    color:#9b9ea0;
+    font-size:14px;
+}
+.style-lj>a{
+    display:inline-block;
+    margin-top:15px;
+    color:#9b9ea0;
+    font-size:14px;
+    text-decoration:none;
+    margin-bottom:20px;
+}
+.style-ljb{
+    width:21px;
+    height:20px;
+    display:inline-block;
+    background-image:url(../img/yun（全）.png);
+    background-position:-94px -30px;
+    vertical-align:-3px;
+
+}
+.style-ljc{
+    width:21px;
+    height:21px;
+    display:inline-block;
+    vertical-align:-3px;
+    background-image:url(../img/yun（全）.png);
+    background-position:-116px -28px;
+
+}
+/*底部块元素样式的结束*/
+/*右边移动的小窗口的样式*/
+.style-m{
+    width:45px;
+    height:140px;
+    background-color:#33cde5;
+    text-align:center;
+    position:fixed;
+    top:50%;
+    right:2px;
+    margin-top:-65px;
+    cursor:pointer;
+}
+.style-m span{
+    display:block;
+    color:white;
+}
+.style-ma{
+    width:25px;
+    height:25px;
+    display:block;
+    background-image:url(../img/yun（全）.png);
+    background-position:-361px -280px;
+    margin-left:10px;
+    margin-top:5px;
+}
+.style-mc{
+    width:25px;
+    height:25px;
+    display:block;
+    background-image:url(../img/yun（全）.png);
+    background-position:-390px -281px;
+    position:fixed;
+    right:2px;
+    top:93%;
+    box-shadow:1px 1px 2px #5a5555;
+}
+/*点击时出现的样式*/
+.style-mb{
+    display:none;  
+    padding:20px;                                                                                                                                                                                                          
+    width:250px;
+    height:150px;
+    margin-top:-75px;
+    background-color:white;
+    position:fixed;
+    top:50%;
+    right:50px;
+    box-shadow:1px 1px 2px #5a5555;
+}
+.style-X{
+    float:right;
+}
+.style-mba li{
+    width:250px;
+    height:50px;
+    /*margin:5px;*/
+}
+.style-mba li>img{
+    display:inline-block;
+    width:30px;
+    height:30px;
+    margin:6px;
+    float:left;
+
+}
+.style-mba li>a{
+    float:left;
+    color:black;
+    text-decoration:none;
+    font-size:14px;
+}
+.style-mba li>p{
+    float:left;
+    font-size:12px;
+}
+.style-mbaa>p{
+    color:orange;
+}
+/*伪类的开始*/
+.style-mba li>a:hover{
+    color:#33cde5;
+}
+
+
+
+
+
+
