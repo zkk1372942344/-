@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /**/
+        .show{
+            font-size:25px;
+            font-weight:bolder;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!--传递第二个参数和使用自身的数据-->
+    <ccl></ccl>
+<!--第二个参数必须是数组或对象-->
+    <elem></elem>
+
+<!--类名，事件，id-->
+    <elec></elec>
+<!--$slot-->
+    <blog-post>
+        <p>ssssssssslllllllllloooooooooootttttttt</p>
+    </blog-post>
+<!--参数的传递和if的判断-->
+    <ele :show="show"></ele>
+    <ele :show="!show"></ele>
+
+
+    <elea></elea>
+
+
+    <!--v-model的应用-->
+    <el-input :name="name" @input="val=>name=val"></el-input>
+    <div>根实例的name是{{name}}</div>
+
+    <!--作用域的插槽-->
+    <eleslot>
+        <template scope="props">
+            <span>{{props.text}}</span>
+        </template>
+    </eleslot>
+
+    <!--父组件向子组件传递作用域插槽-->
+    <elefz></elefz>
+
+    <!--函数组件化-->
+    <smart-item :data="data"></smart-item>
+    <button @click="change('img')">切换为图片为组件</button>
+    <button @click="change('video')">切换为视频为组件</button>
+    <button @click="change('text')">切换为文本组件</button>
+</div>
+<!--vuejs-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //虚拟节点的练习renter函数，前俩个参数的练习
+    Vue.component('child', {
+        render: function(createElement) {
+            return createElement('b', this.$scopedSlots.default({text: '我是组件'}));
+        }
+    });
+    Vue.component("ccl",{
+        data(){
+            return{
+                msg:"虚拟节点的练习",
+                level:2
+            }
+        },
+        render(createElement){
+//            return createElement("h"+this.level,this.msg);
+            //在父组件中使用子组件
+            return createElement('div', [
+                createElement('child', {
+                    scopedSlots: {
+                        default: function(props) {
+                            return [
+                                createElement('span', '来自父组件'),
+                                createElement('span', props.text)
+                            ];
+                        }
+                    }
+                })
+            ]);
+        }
+    });
+    //第二个参数
+    Vue.component('elem', {
+        render: function(createElement) {
+            var self = this;
+            // return createElement('div', '文本');//使用字符串生成文本节点
+            return createElement('div', [//由createElement函数构建而成的数组
+                createElement('h1', '主标'),//createElement函数返回VNode对象
+                createElement('h2', '副标')
+            ]);
+        }
+    });
+    //类名的添加
+    //需要添加的类名和id的时候需要将第二个参数写成对象的形式，第三个参数是内容在第二个参数的对象中attrs为添加id，on为添加事件
+    Vue.component('elec', {
+        render: function(createElement) {
+            return createElement('div', {
+                'class': {
+                    show: this.show
+                },
+                attrs: {
+                    id: 'elem'
+                },
+                on: {
+                    click: this.handleClick
+                }
+            }, '标签中的内容');
+        },
+        data: function() {
+            return {
+                show: true
+            }
+        },
+        methods: {
+            handleClick: function() {
+                console.log('clicked!');
+            }
+        }
+    });
+    //render中slot的用法
+    Vue.component('blog-post', {
+        render: function(createElement) {
+            var header = this.$slots.header,//返回由VNode组成的数组
+                    body = this.$slots.default,
+                    footer = this.$slots.footer;
+            return createElement('div', [
+                createElement('header', header),
+                createElement('main', body),
+                createElement('footer', footer)
+            ])
+        }
+    });
+    //参数的传递,也是通过props来传递的，可以用if else来实现
+    Vue.component('ele', {
+        render: function(createElement) {
+            if (this.show) {
+                return createElement('p', true);
+            } else {
+                return createElement('p', false);
+            }
+        },
+        props: {
+            show: {
+                type: Boolean,
+                default: false
+            }
+        }
+    });
+    //vnodes必须是唯一的
+    var child1 = {
+        render: function(createElement) {
+            return createElement('p', '子组件的的渲染');
+        }
+    };
+    /*Vue.component('ele', {
+     render: function(createElement) {
+     var childNode = createElement(child);
+     return createElement('div', [
+     childNode, childNode//VNodes必须唯一，渲染失败
+     ]);
+     }
+     });*/
+    Vue.component('elea', {
+        render: function(createElement) {
+            return createElement('div',
+                    Array.apply(null, {
+                        length: 2
+                    }).map(function() {
+                        return createElement(child1);     //正确写法
+                    })
+            );
+        }
+    });
+    //v-mdoel的应用实例
+    Vue.component('el-input', {
+        render: function(createElement) {
+            var self = this;
+            return createElement('input', {
+                domProps: {
+                    value: self.name
+                },
+                on: {
+                    input: function(event) {
+                        self.$emit('input', event.target.value);
+                    }
+                }
+            })
+        },
+        props: {
+            name: String
+        }
+    });
+    //作用域插槽的使用
+    Vue.component('eleslot', {
+        render: function(createElement) {
+            // 相当于<div><slot :text="msg"></slot></div>
+            return createElement('div', [
+                this.$scopedSlots.default({
+                    text: this.msg
+                })
+            ]);
+        },
+        data: function() {
+            return {
+                msg: '我是自带的msg数据名'
+            }
+        }
+    });
+    //父组件向子组件传递作用域插槽（会产生vue的警告）
+    Vue.component('elefz', {
+        render: function(createElement) {
+            return createElement('div', [
+                createElement('child3', {
+                    scopedSlots: {
+                        default: function(props) {
+                            return [
+                                createElement('span', '来自父组件'),
+                                createElement('span', props.text)
+                            ];
+                        }
+                    }
+                })
+            ]);
+        }
+    });
+    Vue.component('child3', {
+        render: function(createElement) {
+            return createElement('b', this.$scopedSlots.default({text: '我是子组件'}));
+        }
+    });
+    //函数组件化
+    // 图片组件选项
+    var ImgItem = {
+        props: ['data'],
+        render: function(createElement) {
+            return createElement('div', [
+                createElement('p', '图片组件'),
+                createElement('img', {
+                    attrs: {
+                        src: this.data.url
+                    }
+                })
+            ]);
+        }
+    }
+    // 视频组件
+    var VideoItem = {
+        props: ['data'],
+        render: function(createElement) {
+            return createElement('div', [
+                createElement('p', '视频组件'),
+                createElement('video', {
+                    attrs: {
+                        src: this.data.url,
+                        controls: 'controls',
+                        autoplay: 'autoplay'
+                    }
+                })
+            ]);
+        }
+    };
+    /*纯文本组件*/
+    var TextItem = {
+        props: ['data'],
+        render: function(createElement) {
+            return createElement('div', [
+                createElement('p', '纯文本组件'),
+                createElement('p', this.data.text)
+            ]);
+        }
+    };
+
+    Vue.component('smart-item', {
+        functional: true,
+        render: function(createElement, context) {
+            function getComponent() {
+                var data = context.props.data;
+                if (data.type === 'img') return ImgItem;
+                if (data.type === 'video') return VideoItem;
+                return TextItem;
+            }
+            return createElement(
+                    getComponent(),
+                    {
+                        props: {
+                            data: context.props.data
+                        }
+                    },
+                    context.children
+            )
+        },
+        props: {
+            data: {
+                type: Object,
+                required: true
+            }
+        }
+    });
+    //实例化vue
+    var app = new Vue({
+        el:"#app",
+        data:{
+            show: false,
+            name:"名字",
+            data:{},
+            text:"wwwwwwwww"
+        },methods: {
+            change: function(type) {
+                if (type === 'img') {
+                    this.data = {
+                        type: 'img',
+                        url: 'https://raw.githubusercontent.com/iview/iview/master/assets/logo.png'
+                    }
+                } else if (type === 'video') {
+                    this.data = {
+                        type: 'video',
+                        url: 'http://vjs.zencdn.net/v/oceans.mp4'
+                    }
+                } else if (type === 'text') {
+                    this.data = {
+                        type: 'text',
+                        content: '这是一段纯文本'
+                    }
+                }
+            }
+        },
+        created: function() {
+            this.change('img');
+        }
+
+    })
+</script>
+</body>
+</html>

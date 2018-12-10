@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引入样式 -->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+
+    <style>
+        p{
+            color:#409EFF;
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{num}}</p>
+        <el></el>
+        <p>{{count}}</p>
+        <p>此处的是store中state中str的值：{{$store.state.str}}</p>
+        <p>直接触发的事件：<input type="text" @change="prev"></p>
+
+        <p>通过actions触发的事件：<input type="text" @change="preva"></p>
+        <!--此处定义的事件是在vue的实例中定义的并不是在state中定义的-->
+        <button @click="add">++</button>
+    </div>
+
+    <!-- 引入vue的文件 -->
+    <script src="vuejs/vue.js"></script>
+    <script src="vuejs/vuex.min.js"></script>
+    <!-- 引入组件库 -->
+    <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+    <script>
+        Vue.component("el",{
+            template:`
+                <div>
+                    <p>{{$num}}</p>
+                    <p>{{$num}}</p>
+                    <p>{{$num}}</p>
+                    <p>{{$span(200)}}</p>
+                    <p>直接触发的事件：<input type="text" v-model="prev"></p>
+                </div>
+            `,
+            computed:{
+                    prev:{
+                        get(){
+                            return this.$store.state.str;
+                        },
+                        set(newVal){
+                            return this.$store.commit("prev",newVal);
+                        }
+                    },
+                ...Vuex.mapGetters(["$num","$span"])
+            },
+            methods:{
+
+            }
+        })
+        //创建的vue的实例
+        let app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            computed: {
+               //几种store.state的调用方法
+                // num() {
+                //     return this.$store.state.num
+                // }
+            //使用辅助函数_对象方式
+            // computed:{
+            //     ...Vuex.mapState({
+            //         n: "num"
+            //         // n:state=>state.num,
+            //         // n(state){
+            //         //     return state.num;
+            //         // }
+            //     })
+            // },
+                //在vue挂载的元素shang可以之接访问num就是store中定义的num
+                ...Vuex.mapState(["num","count"])
+            },
+            methods: {
+                add(){
+                    this.$store.commit("add")
+                },
+                prev(e){
+                    this.$store.commit("prev", e.target.value)
+                },
+                preva(e){
+                    this.$store.dispatch("preva", e.target.value)
+                }
+            },
+            store: new Vuex.Store({     //new 创建的vuex的实例化
+                const moduleA = {
+                    //store内部的属性可以用这样来配置相当于store的子组件
+
+                }
+                state: {
+                    num: 10,
+                    count: 100,
+                    str:"aaa"
+                },
+                mutations: {
+                    //store内部提供的方便修改共享数据的方法
+                    add(state) {
+                        //此处的this并不是在此处的局部变量,此处的this指向的是window
+                        console.log(this);
+                        state.num++;
+                    },
+                    prev(state,a){
+                        //对于传递参数的形式
+                        state.str=a;
+                    }
+                },
+                getters:{
+                    $num(state,getters){
+                        return "$"+state.num;
+                    },
+                    $span(state){
+                        return function(a){
+                            return a>state.count
+                        }
+                    }
+                },
+                actions:{
+                    preva(context,a){
+                        setTimeout(()=>{
+                            context.commit("prev",a)
+                        },5000)
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

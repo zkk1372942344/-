@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--切换一-->
+    <button @click="c=a+'2'">切换</button>
+    <!--切换二-->
+    <div>
+        <button @click="$router.push('/b')">aaaaaaa</button>
+        <button @click="$router.push('/b1')">bbbbbb</button>
+    </div>
+
+
+    <!---->
+    <keep-alive>
+
+        <div :is="c"></div>
+
+    </keep-alive>
+    <router-view></router-view>
+</div>
+
+    <!--vuejs-->
+    <script src="vuejs/vue.js"></script>
+    <!--vue.router-->
+    <script src="vuejs/vue.router.js"></script>
+<script>
+    //路由中的keep-alive
+    //keep-alive可以保存状态，在切换回去之前状态的时候还能是原来的样式
+
+    Vue.component("c1",{
+        template:`
+                <button @click="c1">c1按钮</button>
+            `,
+        created(){
+            console.log("c1");
+        },
+        methods:{
+            c1(e){
+                e.target.style.color="green";
+                e.target.fontWeight="25px";
+            }
+        }
+    })
+    Vue.component("c2",{
+        template:`
+                <button @click="c2">c12按钮</button>
+            `,
+        created(){
+            console.log("c2");
+        },
+        methods:{
+            c2(e){
+                e.target.style.color="yellow";
+                e.target.fontWeight="30px";
+            }
+        }
+    })
+
+    //路由的切换
+    //路由传递参数的方式有三种分别是布尔模式、对象模式、函数模式
+    //一、在routes中传递第三个参数props:true
+    //二、第三个参数可以是props:{},可以在对象中传递相应的需要的值
+    //三、也可以是一个函数props:($route)=>{return{query:$route.query,x:10,y:20,params:$route.params}}，在函数中配置需要的数据
+    //上面无论哪种方法都需要在创建的组件中配置props
+    let b={
+        template:`
+            <h1 @click="$event.target.style.color='red'">hello</h1>
+        `
+    }
+    let b1={
+        template:`
+            <div>
+                <input type="text">
+                <button @click="$router.go(-1)">back</button>
+            </div>
+        `
+    }
+    //vue的实例化
+    var app = new Vue({
+        el: "#app",
+        data: {
+            c:"c1",
+            a:"c"
+        },
+        router:new VueRouter({
+            routes:[{
+                path:"/b",
+                component:b
+            },{
+                path:"/b1",
+                component:b1
+            }]
+        })
+    })
+</script>
+</body>
+</html>

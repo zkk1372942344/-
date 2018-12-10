@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+
+        }
+    </style>
+</head>
+<body>
+
+
+<script src="vuejs/vue.js"></script>
+<script src="vueroter/vue.router.js"></script>
+<script>
+    var index={
+        template:`
+    <div>
+        <h1>我是首页</h1>
+    </div>
+    `,
+        created(){
+            console.log("index")
+        }
+    }
+    var pro={
+        props:["id"],
+        template:`
+        <h1>我是商品{{id}}</h1>
+    `,
+        created(){
+            console.log("pro")
+        },
+        watch:{
+            $route(newVal){//監聽路由切換
+                console.log(newVal)
+            }
+        }
+    }
+
+
+
+    var app=new Vue({
+        el:"#app",//指定根元素
+        data:{//实例数据
+
+        },
+        router:new VueRouter({
+            routes:[{
+                path:"/index",
+                component:index
+            },{
+                path:"/pro/:id",
+                component:pro,
+                props:true
+            }]
+        }),
+</script>
+</body>
+</html>

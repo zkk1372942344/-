@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            border:none
+        }
+        /*内容的样式*/
+        .box{
+            width:485px;
+            height:210px;
+            margin:200px auto;
+            border-radius:25px;
+            position:relative;
+            overflow:hidden;
+
+        }
+        .style{
+            display:flex;
+            width:auto;
+            height:210px;
+        }
+        .style>li{
+            width:485px;
+            height:210px;
+            /*background-color:pink;*/
+            font-size: 200px;
+            text-align: center;
+        }
+        .style>li>img{
+            width:485px;
+            height:210px;
+
+        }
+        .btn{
+            width:40px;
+            height:50px;
+            z-index: 2;
+            font-size:25px;
+            color:rgb(255, 255, 255);
+            background-color: rgba(0, 0, 0, 0.5);
+            outline:none;
+            cursor:pointer;
+            position:absolute;
+            top:40%;
+        }
+        .btn:nth-child(3){
+            right:0;
+            border-top-left-radius:20px;
+            border-bottom-left-radius:20px;
+        }
+        .btn:nth-child(4){
+            left:0;
+            border-top-right-radius:20px;
+            border-bottom-right-radius:20px;
+        }
+        /*底部悬浮按钮的样式*/
+        .btn-box{
+            width:350px;
+            height:2px;
+            position:absolute;
+            bottom:20px;
+            left:50%;
+            margin-left:-175px;
+            display: flex;
+        }
+        .btn-box>li{
+            width:25px;
+            height:2px;
+            background-color:pink;
+            opacity: 0.1;
+            margin-left:25px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <carousel></carousel>
+    <carousel></carousel>
+    <carousel></carousel>
+    <carousel></carousel>
+    <carousel></carousel>
+    <carousel></carousel>
+</div>
+
+<!-- vuejs -->
+<script src="vuejs/vue.js"></script>
+<script>
+    //创建组件
+    Vue.component("carousel",{
+        data:function(){
+            return{
+                list_a:["images/a.png","images/c.jpg","images/d.jpg","images/e.jpg","images/f.jpg","images/g.jpg"],
+                list:["images/g.jpg","images/a.png","images/c.jpg","images/d.jpg","images/e.jpg","images/f.jpg","images/g.jpg","images/a.png"],
+                num:1,
+                msg:">",
+                mag:"<",
+                transition:"all .5s",
+                flag:true,
+                fg:false
+            }
+        },
+        template:`
+            <div class="box">
+                <ul class="style" :style="{width:485*list.length+'px',marginLeft:-485*num+'px',transition:transition}" @transitionend="end" @mouseenter="show"  @mouseleave="hide">
+        <li v-for="x in list">
+            <img v-bind:src="x" alt="">
+        </li>
+    </ul>
+    <ul class="btn-box">
+        <li v-for="(x,index) in list_a" :style="{opacity: (index+1)==num ? 1 : 0.1}" @click="ta2(index)"></li>
+    </ul>
+    <button class="btn" @click="next()" v-show="fg" @mouseenter="show"  @mouseleave="hide">{{msg}}</button>
+    <button class="btn" @click="prev()" v-show="fg" @mouseenter="show"  @mouseleave="hide">{{mag}}</button>
+            </div>
+        `,
+    methods:{
+        next(){
+            if(this.flag){
+                this.flag=false;
+                this.transition="all .5s";
+                this.num++;
+                console.log(this.num);
+            }
+        },
+        prev(){
+            if(this.flag){
+                this.flag=false;
+                this.transition="all .5s";
+                this.num--;
+            }
+        },
+        end(){
+            //到假的第一张动画结束之后，瞬间回到真正的第一张
+            if(this.num==this.list.length-1){
+                this.transition="all 0s";
+                this.num=1;
+            }else if(this.num==0){
+                this.transition="all 0s";
+                this.num=this.list.length-2;
+            };
+            this.flag=true;
+        },
+        hide(){
+            this.fg=false;
+        },
+        show(){
+            this.fg=true;
+        },
+        ta1(a){
+            this.num==a;
+        },
+        ta2(a){
+            if(a>0 && a<7){
+                this.num=a+1
+            }
+        }
+    }
+    });
+    //实例化创建vue
+    var app = new Vue({
+        el:"#app",
+        data:{
+
+        }
+    })
+</script>
+</body>
+</html>

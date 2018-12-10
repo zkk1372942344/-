@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <p>父组件:<input type="checkbox" v-model="flag"></p>
+    <chec :flag="flag" :msg="msg" @chec="flag=arguments[0]" @cha="input"></chec>
+    <h2>父组件中的msg：{{msg}}</h2>
+
+    <sel :res="res" :list-sel="listSel" @sel="res=arguments[0]"></sel>
+    <p>父组件的:{{res}}</p>
+
+    <aaa @click.native="cl" bb="bb" :bb.sync="bc">
+        <template slot-scope="{msg}">{{msg}}</template>
+        <template slot="a1">aaaaaaa</template>
+        <template slot="a2">bbbbbbbbb</template>
+    </aaa>
+
+    <!--非父组件通信-->
+    <c1 v-model="flag">v-model实现的</c1>
+    <c2 v-model="flag">v-model实现的</c1>
+    <c1 :flag.sync="flag">.sync实现的</c1>
+    <c2 :flag.sync="flag">.sync实现的</c1>
+
+    <!--非父子组件的通信$on实现-->
+    <c3>兄弟组件：</c3>
+    <c4>兄弟组件：</c3>
+</div>
+<!--vuejs-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //vue的自定义事件
+    //组件之间数据的双向绑定，主要是通过父组件自己来执行数据的修改，子组件来执行的话会出现警告的
+    Vue.component("chec",{
+        props:{
+            "flag":Boolean,
+            "msg":[Number,String]
+        },
+        template:`
+        <div>
+            <p>子组件:<input type="checkbox" :checked="flag" @change="que"></p>
+            <input type="text" @input="tx" :value="msg">
+            <p>{{msg}}</p>
+        </div> `,
+        methods:{
+            que(e){
+                this.$emit("chec", e.target.checked);
+            },
+            tx(e){
+                this.$emit("cha", e.target.value);
+            }
+        }
+    })
+    //vue组件实现的sel的数据双向绑定
+    Vue.component("sel",{
+        props:["res","listSel"],
+        template:`
+        <select :value="res" @change="sel">
+            <option v-for="item in listSel">{{item}}</option>
+        </select>`,
+        created(){
+            this.$emit("sel", this.listSel[0]);
+        },
+        methods:{
+            sel(e){
+                this.$emit("sel", e.target.value);
+            }
+        }
+    })
+    //不需要自定义事件需要触发原生事件的时候需要props中的参数是value自定义事件的名字是input有特殊情况的可以配置model中的prop和enent
+    //.synv也一样
+    //原生事件的触发需要在事件的后面加上.native
+    Vue.component("aaa",{
+        model:{
+            prop:"btn",
+            event:"dj"
+        },
+        data(){
+            return{
+                msg:"我是子组件中的变量"
+            }
+        },
+        props:["btn","bb"],
+        template:`
+        <div>
+            <button @click="aa">hellow</button><br>
+            <button @click="sync">{{bb}}</button>
+            <slot nema="a1" :msg="msg"></slot>
+            <slot nema="a2"></slot>
+        </div>
+
+        `,
+        methods:{
+            aa(){
+                alert("hellow");
+            },
+            sync(){
+                this.$emit("update:bb","hellow world");
+            }
+        }
+    })
+    //vue的非父组件通信
+    Vue.component("c1",{
+        model:{
+            prop:"flag",
+            event:"update:flag"
+        },
+        props:["flag"],
+        template:`
+        <div>
+            <input type="checkbox" :checked="flag" @change="change">
+            <slot></slot>
+        </div>
+
+        `,
+        methods:{
+            change(e){
+                this.$emit("update:flag",e.target.checked);
+            }
+        }
+    })
+    Vue.component("c2",{
+        model:{
+            prop:"flag",
+            event:"update:flag"
+        },
+        props:["flag"],
+        template:`
+            <div>
+            <input type="checkbox" :checked="flag" @change="change">
+            <slot></slot>
+        </div>
+        `,
+        methods:{
+            change(e){
+                this.$emit("update:flag",e.target.checked);
+            }
+        }
+    })
+    //非父组件实现的通信$on
+    Vue.component("c3",{
+        data(){
+            return{
+                x:""
+            }
+        },
+        template:`
+        <div>
+            <button>c1 {{x}}</button>
+            <slot></slot>
+        </div>
+
+    `,
+        created(){
+            bus.$on("getData",(a)=>{
+                //将改变的值传给this.x
+                this.x=a;
+            })
+        }
+    })
+
+    Vue.component("c4",{
+        data(){
+            return {
+                msg:"hello"
+            }
+        },
+        template:`
+        <div>
+            <button>c2</button>
+            <slot></slot>
+        </div>
+    `,
+        created(){
+            bus.$emit("getData",this.msg)
+        },
+        watch:{
+            msg(){
+                bus.$emit("getData",this.msg)
+            }
+        }
+    })
+    var bus=new Vue();
+    //vue实例化
+    var app = new Vue({
+        el:"#app",
+        data:{
+            flag:true,
+            msg:"hellow",
+            listSel:["上海","北京","杭州","深圳","广州"],
+            res:"",
+            bc:"world",
+        },
+        methods:{
+            input(a){
+                this.msg=a;
+            },
+            cl(){
+                alert("ssssss")
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

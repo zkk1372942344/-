@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+</head>
+<body>
+    <div class="app">
+        <h2>{{"ww"|toUpper(1)}}</h2>
+        <button @click="getData">请求数据</button>
+        <ol><li v-for="item in list"></liv-for></ol>
+    </div>
+    <script src="vuejs/vue.js"></script>
+    <script>
+        //jsonp的数据接口
+        /*
+         http://www.bejson.com/knownjson/webInterface/*/
+        var app = new Vue({
+            el:".app",
+            data:{
+                list:[],
+            },
+            //数据的过滤同数据的计算大致相同
+            filters:{
+                //将小写转换为大写
+                toUpper:function(val,a){
+                    console.log(a);
+                    return val.toUpperCase();
+                }
+            },
+            created(){
+                // this.getData();
+            },
+            methods:{
+                getData(){
+                    console.log("开始请求数据")
+
+                    let jsonp=document.createElement("script");
+                    jsonp.src="http://cache.video.iqiyi.com/jp/avlist/202861101/1/?callback=fun"
+                    window.fun=(res)=>{
+                        this.list=res.data.vlist;
+                        console.log(res.data);
+                        console.log("数据接受成功")
+                    }
+                    document.body.appendChild(jsonp);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

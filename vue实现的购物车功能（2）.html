@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        /**{*/
+        /*margin:0;*/
+        /*padding:0;*/
+        /*list-style:none;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div class="app">
+    <table border="1" cellpadding="10" v-show="mbflag">
+        <tr>
+            <th>选项</th>
+            <th>商品</th>
+            <th>价格</th>
+            <th>选购数量</th>
+        </tr>
+        <tr v-for="(item,i) in list">
+            <td><input type="checkbox" v-model="shopArr" :value="item"></td>
+            <td>{{item.title}}</td>
+            <td>{{item.price}}</td>
+            <td>
+                <button @click="reduce(item)">-</button>
+                <button>{{item.count}}</button>
+                <button @click="add(item)">+</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">全选：<input type="checkbox" v-model="checkAll"></td>
+            <td colspan="2">总价：￥{{total}}</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <button @click="mbflag=false" style="font-size: 25px;">查询购物清单</button>
+            </td>
+        </tr>
+    </table>
+
+    <table border="1" cellpadding="10" v-show="mbflag==false">
+        <tr>
+            <th>商品</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>价格</th>
+        </tr>
+        <tr v-for="a in shopArr">
+            <td>{{a.title}}</td>
+            <td>￥{{a.price}}</td>
+            <td>{{a.count}}</td>
+            <td>{{a.count*a.price}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">总价：￥{{total}}</td>
+        </tr>
+        <tr style="text-align: center">
+            <td colspan="4"><button @click="mbflag=true" style="font-size: 25px">返回</button></td>
+        </tr>
+    </table>
+</div>
+<!--vue.js-->
+<script src="vuejs/vue.js"></script>
+<script>
+    var app = new Vue({
+        el:".app",
+        data:{
+            list:[{
+                title:"苹果",
+                price:1.5,
+                count:1,
+                id:1
+            },{
+                title:"西瓜",
+                price:3.0,
+                count:1,
+                id:2
+            },{
+                title:"香蕉",
+                price:2.5,
+                count:1,
+                id:3
+            }],
+            shopArr:[],
+            mbflag:true
+        },
+        methods:{
+            add(a){
+                //增加相应的购物数量
+                a.count++;
+            },
+            reduce(item){
+                //减少相应的购物数量
+                item.count>1 ? item.count-- : null;
+            }
+        },
+        computed:{
+            total(){
+                //监听存放总价数组中的价格
+                let num=0;
+                this.shopArr.forEach((a)=>{
+                    num += a.price * a.count;
+                });
+                return num;
+            },
+            checkAll:{
+                get(){
+                    return this.shopArr.length==this.list.length;
+                },
+                set(newVal){
+                    newVal ? this.shopArr=this.list : this.shopArr=[];
+                }
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

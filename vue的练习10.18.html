@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--动态组件-->
+    <button v-for="item in clist" @click="c=item">{{item}}</button>
+    <div :is="c"></div>
+
+
+    <!--ajax添加的minxins-->
+    <e1></e1>
+
+
+
+</div>
+<div id="app1">
+    <!--继承的练习-->
+    <e2></e2>
+</div>
+<!--vuejs-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //创建组件mixins的用法
+    //合理利用mixins可以减少vue中的代码量
+    let m={
+        template:`
+            <h2>{{c}}</h2>
+        `
+    }
+    Vue.component("c1",{
+        mixins:[m],
+        data(){
+            return{
+                c:"c1"
+            }
+        }
+    })
+    Vue.component("c2",{
+        mixins:[m],
+        data(){
+            return{
+                c:"c2"
+            }
+        }
+    })
+    //mixins接入的数组也就说可以是多个
+    Vue.component("c3",{
+        mixins:[m],
+        data(){
+            return{
+                c:"c3"
+            }
+        }
+    });
+    //插件的利用
+    //创建插件
+    let myplugin={};
+    //给插件赋值
+    myplugin.install=function(Vue){
+
+        Vue.component("e1",{
+            template:`
+                <button>hot are you!</button>
+            `
+        });
+        Vue.prototype.$ajax=function(url){
+
+            return xhr = new Promise((resolve,reject)=>{
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET",url);
+                xhr.send();
+                xhr.onreadystatechange=function(){
+                    if(xhr.status===200 && xhr.readyState===4){
+                        resolve(xhr.responseText);
+                    }
+                }
+                xhr.onerror=function(err){
+                    reject(err)
+                }
+            })
+        }
+    };
+    //将创建的vue的实例化传递到Vue中
+    Vue.use(myplugin);
+    //extend继承的练习
+    //可以直接将创建的构造函数实例化
+    let v=Vue.extend({
+        created(){
+            console.log("我是继承的事件");
+
+        }
+    })
+    v.component("e2",{
+        template:`
+            <button>按钮</button>
+        `
+    })
+    var app=new v({
+        el:"#app1",
+        data:{
+
+        }
+    })
+    //vue的实例化
+    var app = new Vue({
+        el:"#app",
+        data:{
+            c:"c1",
+            clist:["c1","c2","c3"],
+        },
+        create(){
+            let fn=async ()=>{
+                let res = await this.$ajax("http://vjs.zencdn.net/v/oceans.mp4");
+                console.log(res);
+            }
+            fn();
+        }
+    })
+</script>
+</body>
+</html>

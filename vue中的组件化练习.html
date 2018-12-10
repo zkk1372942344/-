@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <!--此处调用组件,在外面调用组件的话会不生效的-->
+    <btn></btn>
+</div>
+
+<script src="vuejs/vue.js"></script>
+<script>
+    //组件的创建（创建的组件必须在挂在的根实例内部才可以解析否则解析不了）
+    //创建组件的时候一定要注意每个组件只能有一个根元素
+    //
+    Vue.component("btn",{
+        data:function(){
+            return{
+                num:0
+            }
+        },
+        template:`
+        <div>
+            <p>商品的数量有{{num}}个</p>
+            <button @click="reduce">+</button>
+            <button @click="num++">-</button>
+        </div>`,
+        methods:{
+            reduce(){
+                this.num--;
+            }
+        },
+        created(){
+            //同正常的实例化内部一样可以正常解析事件
+
+        }
+    });
+
+    var app=new Vue({
+        el:".app",
+        data:{
+
+        }
+    })
+</script>
+</body>
+</html>

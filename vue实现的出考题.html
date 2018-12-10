@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            border:none;
+        }
+        input{
+            border-radius:10px;
+        }
+        /*内容的样式*/
+        /*添加题目的样式*/
+        .box-get,.box-set{
+            width:230px;
+            height:50px;
+            background-color:green;
+            color:lightblue;
+            font-size:35px;
+            font-weight: bolder;
+            text-align: center;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            outline: none;
+            margin:20px auto;
+        }
+        /*蒙版的样式*/
+        .style-mb{
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-color:rgba(0,0,0,.7);
+
+        }
+        /*添加题目页面的样式*/
+        .style-content{
+            width:800px;
+            height:500px;
+            padding:30px;
+            border-radius:50px;
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin:-250px 0 0 -400px;
+            background-color:white;
+            box-sizing: border-box;
+            display:flex;
+            flex-direction:column;
+            align-items: center;
+        }
+        /*离开按钮的样式*/
+        .content-leave{
+            outline:none;
+            font-size:40px;
+            background-color:transparent;
+            color:balck;
+            position:absolute;
+            right:20px;
+            top:20px;
+        }
+        /*题目区域的样式*/
+        .content-topic{
+            width:500px;
+            height:80px;
+            margin:0 auto;
+            display: flex;
+
+        }
+        .content-topic>h2{
+            width:20%;
+            height:50px;
+            line-height: 50px;
+        }
+        .content-topic>textarea{
+            width:80%;
+            height:50px;
+            font-size:20px;
+            font-weight:bolder;
+            border-bottom: 3px solid #a5b9ff;
+            padding:15px;
+            box-sizing: border-box;
+        }
+        /*添加选项区域的样式*/
+        .content-option{
+            margin-top:20px;
+            width:500px;
+            height:50px;
+
+            display:flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .content-option>input{
+            width:300px;
+            height:auto;
+            border:1px solid black;
+            font-size:17px;
+            text-indent: 5px;
+        }
+        .content-option>button{
+            margin-left:20px;
+            width:70px;
+            height:30px;
+            font-size:15px;
+            background-color:green;
+            color:white;
+            border-radius:10px;
+        }
+        /*渲染区域和确认按钮区域的样式*/
+        .content-que{
+            margin-top:20px;
+            width:600px;
+            height:300px;
+            display: flex;
+            flex-direction: row;
+        }
+        /*渲染的选项区域的样式*/
+        .content-options{
+            width:300px;
+            height:auto;
+            /*border:1px solid black;*/
+        }
+        .content-options>li>button{
+            background-color:transparent;
+            color:red;
+            font-size:20px;
+            float:right;
+            margin-right:20px;
+        }
+        /*确认按钮区域的样式*/
+        .content-que>div{
+            display: flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content: center;
+        }
+        .content-que>div>h3>input{
+            width:150px;
+            height:30px;
+            font-size: 20px;
+            border:1px solid green;
+        }
+        /*试题的样式*/
+        .box-content{
+            width:800px;
+            height:auto;
+            padding:30px;
+            box-sizing: border-box;
+            position:absolute;
+            left:50%;
+            margin-left:-400px;
+            background-color:#dedede;
+            border-radius:30px;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box-content>.box-submit{
+            width:150px;
+            height:40px;
+            background-color:orange;
+            color:white;
+            font-size:20px;
+            font-weight:bolder;
+            border-radius:10px;
+        }
+        .box-content>p{
+            font-size:25px;
+            color:green;
+        }
+        .box-content>ol>li{
+            border-bottom:5px double #474747;
+        }
+        .box-content>ul>li{
+            border-bottom:1px dashed black;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button class="box-get" @click="mbFlag=true">添加题目</button>
+    <div class="box-content">
+        <ol v-show="sFlag">
+            <li v-for="(item,x) in list">
+                <h3>{{x+1}}.{{item.topic}}(分值：{{item.score}}分)</h3>
+                <ul>
+                    <li v-for="(a,y) in item.options">
+                        <input type="radio" :value="str[y]" v-model="answerArr[x]">
+                        {{str[y]}}:{{a}}
+                    </li>
+                </ul>
+                <h4>您选的答案是：{{answerArr[x]}}</h4>
+            </li>
+        </ol>
+        <button @click="submit" class="box-submit" >确认提交试卷</button>
+        <p>{{span}}</p>
+        <ul v-show="sFlag==false">
+            <li v-for="(a,i) in answerArr">
+                <span>试题序号：{{i+1}}</span>
+                <span>正确答案：{{list[i].result}}</span>
+                <span :style="{color: list[i].result===answerArr[i] ? 'black': 'red'}">您的答案：{{answerArr[i]}}</span><br>
+            </li>
+        </ul>
+    </div>
+    <!--list[i].result-->
+    <!--answerArr[i]-->
+    <!--蒙版效果-->
+    <div class="style-mb" v-show="mbFlag">
+        <!--添加题目的页面-->
+        <div class="style-content">
+            <!--离开按钮-->
+            <button class="content-leave" @click="mbFlag=false">×</button>
+            <!--题目和选项-->
+            <div class="content-topic">
+                <h2>题目：</h2>
+                <textarea v-model="topic"></textarea>
+            </div>
+            <div class="content-option">
+                <h3>选项：</h3>
+                <input type="text" v-model="option">
+                <button @click="add">添加选项</button>
+            </div>
+            <div class="content-que">
+                <!--渲染的选项-->
+                <ul class="content-options">
+                    <li v-for="(item,index) in answers">
+                        {{str[index]}}:{{item}}
+                        <button @click="del(index)">x</button>
+                    </li>
+                </ul>
+                <div>
+                    <!--正确答案区域-->
+                    <h3>
+                        正确答案：<input type="text" v-model="resultComputed" ><br>
+                        此题分值：<input type="number" v-model="scoreComputed">
+                    </h3>
+                    <!--确认添加按钮-->
+                    <button class="box-set" @click="set">确认添加题目</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="vuejs/vue.js"></script>
+<script>
+    //实例化vue对象
+    var app = new Vue({
+        el:"#app",
+        data:{
+            mbFlag:false,      //蒙版效果
+            sFlag:true,
+            topic:"",           //题目
+            option:"",          //选项
+            answers:[],        //暂时存放添加的数组
+            result:"",         //正确的答案
+            score:5,          //分值
+            str:"ABCDEFGHIJKLMNOPQRS",   //选项
+            answerArr:[],           //暂时存放试卷结果的数据
+            span:"",               //试卷结果
+            spans:[],             //试卷结果的数据
+            list:[       //完全添加完毕后的存放的数据
+                {
+                    topic:"aaaaaaaa",
+                    options:["var","let","const","public"],
+                    result:"B",
+                    score:5
+                },
+                {
+                    topic:"不属于js变量声明方式的是",
+                    options:["var","let","const","public"],
+                    result:"D",
+                    score:5
+                },
+                {
+                    topic:"不属于js数组方法的是",
+                    options:["splice","replace","push","indexOf"],
+                    result:"B",
+                    score:5
+                }
+                ]
+        },
+        methods:{
+            add(){
+                //添加选项
+                if(this.option!=""){
+                    this.answers.push(this.option);
+                    this.option="";
+                }else{
+                    alert("请输入内容");
+                }
+            },
+            del(index){
+                //添加选项后的删除事件
+                this.answers.splice(index,1)
+            },
+            set(){
+                if(this.topic!=="" && this.answers!==[] && this.result!=="" && this.score!==""){
+                    //将数据保存到相应的数组中去
+                    this.list.push({
+                        topic:this.topic,
+                        options:this.answers,
+                        result:this.result,
+                        score:this.score
+                    });
+                    alert("添加成功");
+                    //清空之前的表单元素
+                    this.topic="";
+                    this.option="";
+                    this.result="";
+                    this.answers=[];
+                    this.score="";
+                    //关闭蒙版效果
+                    this.mbFlag=false;
+                    console.log(this.list);
+                }else{
+                    if(this.topic==""){
+                        alert("题目不能为空");
+                    }else if( this.answers.length<2){
+                        alert("选项不符合标准");
+                    }else if(this.result==""){
+                        alert("正确答案不能为空");
+                    }
+                }
+
+            },
+            submit(){
+                //提交试卷的事件
+                let count= 0,fens=0;
+                for(var i=0;i<this.list.length;i++){
+                    if(this.list[i].result==this.answerArr[i]){
+                        fens+=this.list[i].score;
+                        count++;
+                    }
+
+                }
+                this.sFlag=false;
+                this.span=`一共${this.list.length}道题,您做对了${count}道,正确率${parseInt(count/this.list.length*100)}%;总分 ${fens}`;
+
+
+            }
+        },
+        computed : {
+            resultComputed : {
+                get: function(){
+                    return this.result;
+                },
+                set : function(val){
+                    this.result = val.toUpperCase();
+                }
+            },
+            scoreComputed : {
+                get: function(){
+                    return this.score;
+                },
+                set : function(val){
+                    this.score = parseFloat(val<0 ? -val : val>100 ? 100 :val);
+                }
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

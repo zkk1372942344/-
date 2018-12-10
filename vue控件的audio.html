@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        .box{
+            width:300px;
+            height:300px;
+            background-color:red;
+            margin:0 auto;
+            transition: all 1s;
+        }
+    
+    </style>
+</head>
+<body>
+<div id="app">
+    <audio controls="controls" autoplay="autoplay" src="http://m10.music.126.net/20181023220537/1e8f7bed7d5a1702a37eac68ea16c433/ymusic/705e/788d/86cb/ea56adddbb468ba003d07819d2ce8e83.mp3" id="music" @click="flag=!flag"></audio>
+
+    <div class="box" @click="flag=!flag" :style="{transform:deg}"></div>
+</div>
+<script src="vuejs/vue.js"></script>
+<script src="vuejs/vue.router.js"></script>
+<script>
+    
+    let app = new Vue({
+        el:"#app",
+        data:{
+            flag:false,
+            deg:"rotate(0deg)",
+            ass:"",
+        },
+        methods:{
+
+        },
+        watch:{
+            flag(){
+                let audio = document.getElementById('music');
+                this.flag ? audio.play() : audio.pause();
+                let num= 0,timer;
+                timer=setInterval(()=>{
+                    this.flag==true ? num+=0.5 : num=this.ass;
+                    this.deg="rotate("+num+"deg)";
+                    this.ass=num;
+                },167)
+            }
+        }
+    }) 
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+</head>
+<body>
+    <div class="app">
+        <select v-model="msg" @change="chang()">
+            <option v-for="(item,i) in list">{{i}}</option>
+        </select>
+        <select v-model="msgA" @change="change">
+            <option v-for="(a,j) in res">{{a}}</option>
+        </select>
+        <select>
+            <option v-for="(b,l) in resb">{{b}}</option>
+        </select>
+    </div>
+
+    <script src="vuejs/vue.js"></script>
+    <script src="vuejs/area.js"></script>
+    <script>
+        var app = new Vue({
+            el: ".app",
+            data: {
+                msg: "河南省",
+                msgA:"郑州市",
+                list: area,
+                res: [],
+                resa: [],
+                resb: [],
+                resc:[]
+            },
+            created(){
+                //初始化数组
+                for(let i in this.list[this.msg][0]){
+                    this.res.push(i);
+                }
+                this.resc = this.list[this.msg][0];
+                this.resa = this.resc[this.msgA];
+                for(let a in this.resa){
+                    for(let b in this.resa[a]){
+                    this.resb.push(b);
+                    }
+
+                }
+            },
+            methods:{
+                chang(){
+                    this.res=[];
+                    for(let i in this.list[this.msg][0]){
+                        this.res.push(i);
+                    }
+                    this.msgA=this.res[0];
+                    this.resc = this.list[this.msg][0];
+                    this.resa = this.resc[this.msgA];
+                    this.resb=[];
+                    for(let a in this.resa){
+                        for(let b in this.resa[a]){
+                            this.resb.push(b);
+                        }
+                    }
+                },
+                change(){
+                    this.resc = this.list[this.msg][0];
+                    this.resa = this.resc[this.msgA];
+                    this.resb=[];
+                    for(let a in this.resa){
+                        for(let b in this.resa[a]){
+                            this.resb.push(b);
+                        }
+                    }
+                }
+            }
+
+        })
+    </script>
+<!--
+computed:{
+                arr:{
+                    get:function(){
+                        return this.msg="郑州市";
+                    },
+                    set:function(val){
+                        for (let i in list){
+                            this.resa.push(i)
+                        }
+                        return this.msga=this.resa[0]
+                    }
+                },
+                arra:{
+                    get:function(){
+                        return this.msga="郑州市";
+                    },
+                    set:function(val){
+                        for (let i in list){
+                            this.resb.push(i)
+                        }
+                        return this.msga=this.resa[0]
+                    }
+                }
+            }-->
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+
+
+        /*内容的样式*/
+        img{
+            width:80px;
+            border-radius:35px;
+        }
+        li{
+            line-height:80px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <router-view></router-view>
+</div>
+<!--vue.js-->
+<script src="vuejs/vue.js"></script>
+<!--vue.router-->
+<script src="vuejs/vue.router.js"></script>
+<script>
+    //创建组件
+    //创建的第一个页面
+    let singer = {
+        template:`
+            <div>
+                <h2>华语男歌手</h2>
+                <ol>
+                    <li v-for="item in list">
+                        <img :src="item.picUrl" :alt="item.name">
+                        <h4>{{item.name}}</h4>
+                        <router-link :to="'/songs?id='+item.id">查看单曲</router-link>
+                    </li>
+                </ol>
+            </div>
+        `,
+        data(){
+            return{
+                list:[]
+            }
+        },
+        created(){
+            //调用ajax接口
+            this.$ajax("http://musicapi.leanapp.cn/artist/list?cat=1002").then((res)=>{
+                this.list=JSON.parse(res).artists;
+            })
+        }
+    };
+    //创建的第二个页面
+    let songs = {
+        template:`
+            <div>
+                <ol>
+                    <li v-for="item in songList">
+                        <img :src="item.al.picUrl" :alt="item.al.name">
+                        <span>{{item.al.name}}</span>
+                        <router-link :to="'/player?id='+item.id">播放</router-link>
+                    </li>
+                </ol>
+            </div>
+        `,
+        data(){
+            return{
+                songList:[]
+            }
+        },
+        created(){
+            //调用数据的接口
+            this.$ajax("http://musicapi.leanapp.cn/artists?id=="+this.$route.query.id).then((res)=>{
+                this.songList=JSON.parse(res).hotSongs;
+            })
+        }
+    };
+    //创建的第三个页面
+    let player = {
+        template:`
+            <div>
+                <h2 v-show="url">此歌曲的连接是空的</h2>
+                <audio src=""></audio>
+            </div>
+        `,
+        data(){
+            return{
+                url:""
+            }
+        },
+        created(){
+            this.$ajax("http://musicapi.leanapp.cn/music/url?id="+this.$route.query.id).then((res)=>{
+                this.url=JSON.parse(res).data[0].url;
+                console.log(res);
+        })
+        }
+    }
+    //创建$ajax的实例对象
+    Vue.prototype.$ajax = function(url){
+        return new Promise((resolve)=>{
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET",url);
+            xhr.send();
+            xhr.onreadystatechange=function(){
+                if(xhr.status===200 && xhr.readyState===4){
+                    resolve(xhr.responseText);
+                }
+            }
+        })
+    }
+
+    //实例化vue
+    var app = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        router:new VueRouter({
+            routes:[
+                {
+                    path:"/",
+                    component:singer
+                },{
+                    path:"/songs",
+                    component:songs
+                },{
+                    path:"/player",
+                    component:player
+                }]
+        })
+    })
+
+</script>
+</body>
+</html>

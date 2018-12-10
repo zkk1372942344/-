@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            /*margin:0;*/
+            /*padding:0;*/
+            /*list-style:none;*/
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <select name="" id="box_big">
+
+    </select>
+    <select name="" id="box_cont">
+
+    </select>
+    <select name="" id="box_small">
+
+    </select>
+    <!--<select name="" id="box_min">-->
+
+    <!--</select>-->
+</div>
+
+<script src="vuejs/area.js"></script>
+<script>
+    //原生的js实现
+    //初始化
+    let res=[],resa=[],resb=[],resc=[];
+    let a1,a2,a3;
+    for (let i in area) {
+        box_big.innerHTML+="<option value="+i+">"+i+"</option>"
+        res.push(i);
+        a1=res[0];
+    }
+    for (let  j in area[a1][0]){
+        box_cont.innerHTML+="<option value="+j+">"+j+"</option>";
+
+        resa.push(j)
+        a2=resa[0];
+    }
+    resb=area[a1][0][a2];
+    console.log(resb);
+    for(let k in resb){
+        for (let l in resb[k]){
+            box_small.innerHTML+="<option value="+l+">"+l+"</option>";
+            resc.push(l)
+            a3=resc[0];
+        }
+    }
+//    console.log(resb[0][a3]);
+//    for(let m in resc[a3]){
+//        for (let n in resc[a3][m]){
+//            console.log(n);
+//        }
+//    }
+    window.onload=function(){
+        box_big.onchange = function(){
+            box_cont.innerHTML="";
+            box_small.innerHTML="";
+            for (let j in area[this.value][0]){
+                box_cont.innerHTML+="<option value="+j+">"+j+"</option>";
+            }
+            for(let key in area[this.value][0][box_cont.value]){
+                for (let l in area[this.value][0][box_cont.value][key]){
+                    box_small.innerHTML+="<option value="+l+">"+l+"</option>";
+                }
+            }
+        }
+        box_cont.onchange = function(){
+            box_small.innerHTML="";
+            for(let key in area[box_big.value][0][this.value]){
+                for (let l in area[box_big.value][0][this.value][key]){
+                    box_small.innerHTML+="<option value="+l+">"+l+"</option>";
+                }
+            }
+        }
+
+    }
+
+</script>
+</body>
+</html>

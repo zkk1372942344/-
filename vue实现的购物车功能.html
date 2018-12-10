@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        /**{*/
+            /*margin:0;*/
+            /*padding:0;*/
+            /*list-style:none;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div class="app">
+    <table border="1" cellpadding="10" v-show="mbflag">
+        <tr>
+            <th>选项</th>
+            <th>商品</th>
+            <th>价格</th>
+            <th>选购数量</th>
+        </tr>
+        <tr v-for="(item,i) in list">
+            <td><input type="checkbox" v-model="item.flag" @change="check(item)"></td>
+            <td>{{item.title}}</td>
+            <td>{{item.price}}</td>
+            <td>
+                <button @click="reduce(item)">-</button>
+                <button>{{item.count}}</button>
+                <button @click="add(i)">+</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="checkbox" @change="all" v-model="checkAll">全选</td>
+            <td colspan="2">总价：￥{{total}}</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center">
+                <button @click="mbflag=false" style="font-size: 25px;">查询购物清单</button>
+            </td>
+        </tr>
+    </table>
+
+    <table border="1" cellpadding="10" v-show="mbflag===false">
+        <tr>
+            <th>商品</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>价格</th>
+        </tr>
+        <tr v-for="a in list" v-if="a.flag==true">
+            <td>{{a.title}}</td>
+            <td>￥{{a.price}}</td>
+            <td>{{a.count}}</td>
+            <td>{{a.count*a.price}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">总价：￥{{total}}</td>
+        </tr>
+        <tr style="text-align: center">
+            <td colspan="4"><button @click="mbflag=true" style="font-size: 25px">返回</button></td>
+        </tr>
+    </table>
+</div>
+<!--vue.js-->
+<script src="vuejs/vue.js"></script>
+<script>
+    var app = new Vue({
+        el:".app",
+        data:{
+            list:[{
+                title:"苹果",
+                price:1.5,
+                count:1,
+                id:1,
+                flag:false
+            },{
+                title:"西瓜",
+                price:3.0,
+                count:1,
+                id:2,
+                flag:false
+            },{
+                title:"香蕉",
+                price:2.5,
+                count:1,
+                id:3,
+                flag:false
+            }],
+            total:0,
+            checkAll:false,
+            flagNum:0,
+            mbflag:true,
+        },
+        methods:{
+            add(a){
+                //增加选购的数量
+                this.list[a].count++;
+                this.list[a].flag ? this.total+=this.list[a].price : null;
+            },
+            reduce(a){
+                //减少选购的数量
+                a.count>1&& a.flag ? (this.total -= a.price) : null;
+                a.count>1 ? a.count-- : null;
+            },
+            check(a){
+                //对总价的操作
+                this.total += a.price * a.count * (a.flag ? 1 :-1);
+                //判断选择的数量
+                this.flagNum+=a.flag ? 1 : -1;
+                this.checkAll=this.flagNum == this.list.length;
+            },
+            all(){
+
+                //全选的操作
+                this.list.forEach((a)=>{
+                    a.flag=this.checkAll;
+                });
+                //判断是否需要全选
+                if(this.checkAll){
+                    let num = 0;
+                    this.list.forEach((a)=>{
+                        num += a.price* a.count;
+                    })
+                    this.total = num;
+                    this.flagNum = this.list.length;
+                }else{
+                    this.total = 0;
+                    this.flagNum = 0;
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

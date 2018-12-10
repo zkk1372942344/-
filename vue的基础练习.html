@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            border:none;
+        }
+        /*内容的样式*/
+    </style>
+</head>
+<body>
+
+<div class="app" id="app">
+    <h1>{{msg}}</h1>
+    <p>{{obj.name}}</p>
+    <p>{{obj.age}}</p>
+    <p>{{obj.xb}}</p>
+    <p>{{obj.sg}}</p>
+    <p>
+        <span v-for="x in list">{{x}}<br></span>
+    </p>
+    <div v-color="'red'">wwwwwwwwwwwwwwww</div>
+    <div v-color:bg="'blue'">wwwwwwwwwwwwwwww</div>
+</div>
+<!--vue.js-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //组件的练习
+    //创建一个子组件，在父组件中可以通过child1来获取子组件
+    //子组件
+    let child1 = Vue.extend({
+        props: ["end","fn"],
+        template:
+                `<div>{{end}}</div>
+                `
+    });
+    //父组件
+    let par=Vue.component("carousel", {
+        components: {
+            imgs: child1,
+        },
+        template:
+                `<div>
+                    <imgs></imgs>
+                </div>
+                `
+    })
+    //组件之间的传递数据可以用props来进行也可以用根实例中的data中的数据
+    //props的数据绑定可以是动态的也可以是静态，动态的就是在前面添加v-bind也可以简写
+    //在props中可以改成对象的形式type可以限制单数据流中的类型default是默认值就是不传数据的话会自动添加上default所传递的数据，validator(val){}是函数第一个参数是单向数据流中传递过来的数据可以在里面进行数据的限制
+    //在组件中的computed也可以进行数据的限制可以拼接字符串或改变大小写等
+    Vue.component("c1",{
+        props:{
+            // num:[Number,String]
+            num:{
+                type:Number,
+                // required:true
+                default:200,
+                validator(val){
+                    return val==200;
+                }
+            }
+        },
+        template:`
+            <h1>{{num}}</h1>
+        `,
+        computed:{
+            n(){
+                return "$"+this.num;
+            }
+        }
+    });
+    //$atrs是在组件的外面传递参数的时候不想让顶层元素绑定相应的id等的情况下在绑定需要的元素上可以在需要的元素上添加$attrs,inheritAttrs:false可以使顶层元素绑定不到相应的id但是class和style的话还是一样会被绑定到顶层元素上
+    Vue.component("ea",{
+        props:["msg"],
+        tempalte:`
+        <h2>{{msg}}</h2>`
+    })
+
+    //vue中的自定义指令
+    Vue.directive("color",{
+        inserted(el,binding){
+            el.onclick=function(){
+                this.style[binding.arg ? "backgroundColor":"color"]=binding.value ? binding.value:"red";
+                console.log(binding);
+            }
+        }
+    })
+    var app = new Vue({
+        el:".app",
+        data:{
+            msg:"事件的流程",
+            obj:{
+                name:"zkk",
+                age:20,
+                xb:"boy"
+            },
+            list:[1,2,3]
+        },
+        beforeCreate(){
+            //vue的生命周期
+            //这个时候还不能访问到data
+            console.log(this.msg,"--------beforeCreate的时候")
+        },
+        created(){
+            //此时已经可以访问data中的数据了
+            console.log(this.msg,"--------created");
+        },
+        beforeMount(){
+            //有根实例下的dom结构但是没有相应的赋值
+            console.log(this.$el.innerHTML,"--------beforeMount");
+        },
+        mounted(){
+            //有相应的赋值的dom结构
+            console.log(this.$el.innerHTML,"---mounted");
+        },
+        beforeUpdate(){
+            //在此处是无法访问的到dom的但是可以访问到data中的数据
+//            console.log(this.$el, innerHTML,"------");
+            console.log(this.msg,"------");
+        },
+        updated(){
+            console.log(this.$el.innerHTML);
+            console.log(this.msg);
+        },
+        beforeDestroy(){
+            //销毁实例的时候触发
+            /*销毁实例的方法是app.$destory*/
+            alert("确定销毁吗？")
+        }
+
+    })
+
+
+    //外部修改的方式
+    //方法一
+//    app.obj={...app.obj,sg:60};
+    //方法二(这个方法必须是添加所有的后再加需要添加的)
+    //app.obj={name:"zkk",sg:60};
+    //方法三
+//    app.obj=Object.assign({},app.obj,{sg:60})
+    //在外面改变vue实例里面的数组的话必须利用数组的操作方法
+//    app.list.splice(0,1,123)
+
+
+    //vue的生命周期
+//    app.$mount(".app")
+
+    //es6中Object.keys()的用法
+
+
+
+
+
+
+</script>
+</body>
+</html>

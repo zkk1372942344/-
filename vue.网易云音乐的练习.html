@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        a{
+            color:green;
+            margin:0 10px;
+        }
+        /*内容的样式*/
+
+        img{
+            width:80px;
+            height:80px;
+            border-radius:40px;
+            margin-right:10px;
+        }
+        ol{
+            width:1000px;
+            height:auto;
+            border:2px double black;
+            margin:0 auto;
+            display:flex;
+            flex-direction: row;
+            flex-flow: wrap;
+            padding:30px;
+            box-sizing: border-box;
+            border-radius:50px;
+        }
+        li{
+            width:auto;
+            height:80px;
+            display:flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: center;
+            line-height:80px;
+            margin:20px 0;
+        }
+
+        /*第一个页面的样式*/
+        .style-a{
+            width:1200px;
+            height:auto;
+            /*border:5px solid black;*/
+            margin:0 auto;
+        }
+        .style-a>div{
+            width:1000px;
+            height:auto;
+            border:2px solid red;
+            margin:50px auto;
+            padding:30px;
+            box-sizing: border-box;
+            border-radius:50px;
+            display:flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .style-a>div>button{
+            text-decoration: none;
+            border:1px solid blue;
+            margin:10px;
+            padding:10px;
+            border-radius:20px;
+            box-sizing: border-box;
+            height:35px;
+            background-color:green;
+            color:white;
+            font-weight:bolder;
+            cursor:pointer;
+            outline: none;
+        }
+        .style-a>div>.router-link-exact-active{
+            background-color:yellow;
+            color:red;
+        }
+        .style-a>ol>li{
+            width:280px;
+            margin-right:20px;
+            background-color:lightblue;
+            border-radius:40px;
+        }
+        .style-a-nav{
+            width:200px;
+            height:40px;
+            font-size:30px;
+            font-weight:bolder;
+            margin:0 auto;
+        }
+        /*返回键的样式*/
+        .style-btnl,.style-btnr{
+            width:50px;
+            height:85px;
+            background-color:darkgreen;
+            color:white;
+            font-size:80px;
+            font-weight:bolder;
+            border-radius:25px;
+            position:absolute;
+            top:20px;
+        }
+        .style-btnl{
+            left:80px;
+        }
+        .style-btnr{
+            right:80px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <button @click="$router.go(-1)" class="style-btnl">&lt;</button>
+    <button @click="$router.go(1)" class="style-btnr">&gt;</button>
+
+    <keep-alive>
+        <router-view></router-view>
+    </keep-alive>
+
+</div>
+<!--vue.js-->
+<script src="vuejs/vue.js"></script>
+<!--vue.js-->
+<script src="vuejs/vue.router.js"></script>
+<script>
+    //创建组件
+    //创建的主界面的小页面
+
+
+
+    //创建的主界面的组件
+    /*<router-link v-for="a in liId" :to="{path: '/?id=' + a.id}" :key="a.id">{{a.title}}</router-link>*/
+    const singer = {
+        template:`
+            <div class="style-a">
+                <h2 class="style-a-nav">{{msg}}</h2>
+                <div>
+                    <button v-for="a in liId" @click="sel(a.id,a.title)">{{a.title}}</button>
+                </div>
+                <ol>
+                    <li v-for="item in list">
+                        <img :src="item.picUrl" :alt="item.name">
+                        <h4>{{item.name}}</h4>
+                        <router-link :to="'/songs?id='+item.id">查看单曲</router-link>
+                    </li>
+                </ol>
+            </div>
+        `,
+        data(){
+            return{
+                liId:[{id:1001,title:"华语男歌手"}, {id:1002,title:"华语女歌手"}, {id:1003,title:"华语组合/乐队"}, {id:2001,title:"欧美男歌手"},{id:2002,title:"欧美女歌手"}, {id:2003,title:"欧美组合/乐队"},{id:6001,title:"日本男歌手"}, {id:6002,title:"日本女歌手"},{id:6003,title:"日本组合/乐队"}, {id:7001,title:"韩国男歌手"},{id:7002,title:"韩国女歌手"}, {id:7003,title:"韩国组合/乐队"},{id:4001,title:"其他男歌手"}, {id:4002,title:"其他女歌手"},{id:4003,title:"其他组合/乐队"}],
+                list:[],
+                msg:"华语女歌手"
+            }
+        },
+        created(){
+            //调用ajax接口
+            if(this.$route.query.id){
+                this.list=[];
+                this.$ajax("http://musicapi.leanapp.cn/artist/list?cat="+this.$route.query.id).then((res)=>{
+                    this.list=JSON.parse(res).artists;
+                    this.$router.go(0);
+                })
+            }else{
+                this.$ajax("http://musicapi.leanapp.cn/artist/list?cat=1002").then((res)=>{
+                    this.list=JSON.parse(res).artists;
+                })
+            }
+        },
+        methods:{
+            sel(a,b){
+                this.list=[];
+                this.$ajax("http://musicapi.leanapp.cn/artist/list?cat="+a).then((res)=>{
+                    this.list=JSON.parse(res).artists;
+                })
+                this.msg=b;
+            }
+        }
+    };
+    //创建的对应歌手的单曲页面
+    const songs = {
+        template:`
+            <div>
+                <ol>
+                    <li v-for="item in songList">
+                        <img :src="item.al.picUrl" :alt="item.al.name">
+                        <span>{{item.al.name}}</span>
+                        <router-link :to="'/player?id='+item.id">播放</router-link>
+                    </li>
+                </ol>
+            </div>
+        `,
+        data(){
+            return{
+                songList:[]
+            }
+        },
+        created(){
+            //调用数据的接口
+            this.$ajax("http://musicapi.leanapp.cn/artists?id="+this.$route.query.id).then((res)=>{
+                this.songList=JSON.parse(res).hotSongs;
+        })
+//            this.songList=new set(this.songList);
+        }
+    };
+    //创建的播放音乐的页面的组件
+    const player = {
+        template:`
+            <div>
+                <h2 v-show="url==null">此歌曲的连接是空的</h2>
+                <audio controls="controls" autoplay="autoplay" :src="url"></audio>
+            </div>
+        `,
+        data(){
+            return{
+                url:""
+            }
+        },
+        created(){
+            this.$ajax("http://musicapi.leanapp.cn/music/url?id="+this.$route.query.id).then((res)=>{
+                this.url=JSON.parse(res).data[0].url;
+        })
+        }
+    }
+    //创建$ajax的实例对象
+    Vue.prototype.$ajax = function(url){
+        return new Promise((resolve)=>{
+                    let xhr = new XMLHttpRequest();
+        xhr.open("GET",url);
+        xhr.send();
+        xhr.onreadystatechange=function(){
+            if(xhr.status===200 && xhr.readyState===4){
+                resolve(xhr.responseText);
+            }
+        }
+    })
+    }
+
+    //实例化vue
+    var app = new Vue({
+        el:"#app",
+        data:{
+            msg:"华语女歌手",
+            List:[]
+        },
+        methods:{
+            prev(){
+                return $router.push({ path: '/' })
+            },
+            next(){
+                return $router.push({ path: '/songs' })
+            }
+        },
+        methods: {
+            change: function() {
+                this.type = 'primary'
+            }
+        },
+        router:new VueRouter({
+            routes:[
+                {
+                    path:"/",
+                    component:singer,
+
+                },{
+                    path:"/songs",
+                    component:songs
+                },{
+                    path:"/player",
+                    component:player
+                }]
+        })
+    })
+</script>
+<!--
+https://binaryify.github.io/NeteaseCloudMusicApi/#/
+
+http://musicapi.leanapp.cn-->
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            /*list-style:none;*/
+            border:none;
+        }
+        /*内容的样式*/
+        .text{
+            width:200px;
+            height:30px;
+            background-color:pink;
+        }
+        .ul-box{
+            width:200px;
+            height:auto;
+            display: flex;
+            flex-direction: column-reverse;
+            text-align: left;
+            font-size:20px;
+            background-color:pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" @click="hd">
+        <p>请输入需要的菜名: <br>
+            <input type="text" class="text" v-model="msg" @input="hide">
+        </p>
+        <ul class="ul-box">
+            <li v-for="x in list" v-show="x>=msg" v-if="fg" @click="set(x)">{{x}}</li>
+        </ul>
+    </div>
+<!--vue-->
+<script src="vuejs/vue.js"></script>
+<script>
+var app=new Vue({
+    el:"#app",
+    data:{
+        msg:"",
+        fg:false,
+        list:["鱼香肉丝","红烧肉","香辣粉","小炒肉","云吞","雪糕","黄瓜","水果"],
+    },
+    methods:{
+        set(a){
+            this.msg=a;
+            this.fg=false
+        },
+        hide(){
+            this.fg=true;
+        },
+        hd(){
+            this.fg=false;
+        }
+    }
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*内容的样式*/
+        .router-link-exact-active{
+            color:green;
+            font-weight:bolder;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--路由的选项-->
+    <router-link to="/index">首页</router-link>
+    <router-link to="/pro/1123/苹果">苹果</router-link>
+    <router-link to="/pro2?id=123&title=香蕉">香蕉</router-link>
+
+    <!--路由渲染的页面-->
+    <router-view></router-view>
+
+
+
+</div>
+    <!--vuejs-->
+    <script src="vuejs/vue.js"></script>
+    <!--routerjs-->
+    <script src="vuejs/vue.router.js"></script>
+    <script>
+        //vue路由的练习
+        //创建vue的页面级的组件
+        //参数的传递分为传统的和vue实例中的
+        //每个页面都有自己的data数据需要return
+        let index = {
+            template:`
+                <div>
+                    <h2>首页</h2>
+                    <router-link to="/pro/123/苹果">苹果</router-link>
+                </div>
+
+            `
+        }
+        let pro = {
+            template:`
+                <div>
+                    <h2>苹果页面</h2>
+                    <h2>vue实现的参数：{{$route.params}}</h2>
+                    <router-link to="/pro2?id=123&title=香蕉">香蕉</router-link>
+
+                </div>
+
+            `
+        }
+        let pro2 = {
+            template:`
+                <div>
+                    <h2>香蕉页面</h2>
+                    <h2>传统的参数：{{$route.query}}</h2>
+                    <router-link to="/index">首页</router-link>
+                </div>
+
+            `
+        }
+
+        //vue的实例
+        //在路由的根实例中可以通过router来获取外面定义的里面的内容是用new VueRouter的根实例来渲染的，里面渲染的routes是一个数组对象每个对象都有path和component，--，path是用来命名的component是用来获取外面定义的页面级组件的
+        var app = new Vue({
+            el:"#app",
+            data:{
+
+            },
+            router : new VueRouter({
+                routes:[{
+                        path:"/index",
+                        component:index,
+                    },
+                    {
+                        path:"/pro/:id/:title",
+                        component:pro,
+                    },
+                    {
+                        path:"/pro2",
+                        component:pro2
+                    }
+                ]
+            })
+        })
+    </script>
+</body>
+</html>

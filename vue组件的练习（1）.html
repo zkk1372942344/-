@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .view{
+            width: 800px;
+            height: 80px;
+            margin:200px auto;
+            position: relative;
+            /*background: #666*/
+            overflow: hidden
+        }
+        .box{
+            width: 100%;
+            height:4px;
+            background: #dedede;
+            position: absolute;
+            left:0;
+            top:38px;
+        }
+        .box div{
+            position: absolute;
+            width:80px;
+            height:80px;
+            border-radius: 50%;
+            background: #dedede;
+            top:-38px;
+            line-height: 80px;
+            text-align: center;
+        }
+        .color_view{
+            width: 0;
+            height:80px;
+            position: absolute;
+            overflow: hidden;
+            transition:all .5s;
+        }
+
+        .box_color{
+            width: 100%;
+            height:4px;
+            position: absolute;
+            left:0;
+            top:38px;
+            background: skyblue;
+        }
+        .box_color div{
+            position: absolute;
+            width:80px;
+            height:80px;
+            border-radius: 50%;
+            background: skyblue;
+            top:-38px;
+            line-height: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <carousel v-for="item in list" :x="item.x" :step="item.step"></carousel>
+</div>
+    <!--vue.js-->
+    <script src="vuejs/vue.js"></script>
+    <script>
+        Vue.component("carousel",{
+            props:["x","step"],
+            template:`
+        <div class="view">
+            <div class="box">
+                <div v-for="item in x" :style="{left:item==1?0:((800-80*x)/(x-1)+80)*(item-1)+'px'}">{{item}}</div>
+            </div>
+            <div class="color_view" :style="{width:step*80+(800-80*x)/(x-1)*(step*2-1)/2+'px'}">
+                <div class="box_color">
+                    <div v-for="item in x" :style="{left:item==1?0:((800-80*x)/(x-1)+80)*(item-1)+'px'}">{{item}}</div>
+                </div>
+            </div>
+        </div>
+    `
+        });
+        var app=new Vue({
+            el:"#app",
+            data:{
+                list:[{
+                    x:5,
+                    step:2
+                },{
+                    x:5,
+                    step:1
+                },{
+                    x:5,
+                    step:4
+                }]
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        /*内容的样式*/
+        /*空白进度条的样式*/
+        .style{
+            width:1200px;
+            height:80px;
+            margin:200px auto;
+            position:relative;
+
+        }
+        .box{
+            width:100%;
+            height:5px;
+            background-color:#dedede;
+            left:0;
+            top:37.5px;
+        }
+        .box>div{
+            background-color:#dedede;
+        }
+        .box-div{
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            position:absolute;
+            top:-37.5px;
+            line-height:80px;
+            text-align: center;
+        }
+        /*进度条的样式*/
+        .style-color{
+            width:0;
+            height:80px;
+            position:absolute;
+            top:-37.5px;
+            overflow:hidden;
+            transition:all 1s;
+        }
+        .box-color{
+            width:100%;
+            height:5px;
+            position:absolute;
+            left:0;
+            top:37.5px;
+            background-color:lightblue;
+        }
+        .box-color>div{
+            background-color:lightblue;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="style">
+        <!--底层的进度条-->
+        <div class="box">
+            <div class='box-div' v-for="a in x" :style="{left:a===1 ? 0 :((1200-80*x)/(x-1)+80)*(a-1)+'px' }">{{a}}</div>
+        </div>
+        <!--覆盖层的进度条-->
+        <div class="style-color" :style="{width:stepx*80+(1200-80*x)/(x-1)*(stepx*2-1)/2+'px'}">
+            <div class="box-color">
+                <div class='box-div' v-for="a in x" :style="{left:a===1 ? 0 : ((1200-80*x)/(x-1)+80)*(a-1)+'px'}" >{{a}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--vue.js-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //实例化对象
+    var app = new Vue({
+        el:".app",
+        data:{
+            x:5,
+            stepx:3
+        }
+    })
+</script>
+</body>
+</html>

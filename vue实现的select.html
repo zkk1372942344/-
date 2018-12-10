@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>zh-cn</title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            border:none;
+        }
+        /*仿真的样式*/
+        .btna>div{
+            width:120px;
+            height:auto;
+        }
+        .btna>div>input{
+            width:120px;
+            height:30px;
+            font-size:23px;
+            background-color:transparent;
+            cursor:pointer;
+        }
+        .btna>div>ul{
+            width:120px;
+            height:auto;
+            cursor:pointer;
+            background-color:white;
+            position:absolute;
+        }
+        .btna>div>ul>li{
+            width:120px;
+            height:30px;
+            text-align:center;
+            font-size:21px;
+            margin-left:-11px;
+        }
+        .btna>div>ul>.left{
+            background-color:lightblue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <sel :res="res" :list-sel="listSel" @btn="res=arguments[0]" @sela="res=arguments[0]"></sel>
+    <h2>{{res}}</h2>
+</div>
+<!--vuejs-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //创建组件
+    Vue.component("sel",{
+        props:["res","listSel"],
+        data(){
+            return{
+                flag:false,
+            }
+        },
+        template:`
+            <div class="btna">
+                <select name="area" v-model="res">
+                 <option v-for="item in listSel">{{item}}</option>
+                </select>
+                <div>
+                    <input type="button" :value="res+'▼'" @click="flag=!flag" >
+                    <ul v-show="flag" tabindex="1" @blur="flag=false">
+                        <li v-for="item in listSel" @click="sel" @mouseenter="mu" @mouseleave="mt">{{item}}</li>
+                    </ul>
+                </div>
+
+            </div>
+        `,
+        created(){
+            this.$emit("btn", this.listSel[0]);
+        },
+        methods:{
+            sel(e){
+                this.$emit("sela", e.target.innerHTML);
+                this.flag=false;
+            },
+            mu(e){
+                e.target.className="left";
+            },
+            mt(e){
+                e.target.className="";
+            }
+        }
+    })
+
+    //vue实例化
+    var app = new Vue({
+        el:"#app",
+        data:{
+            flag:true,
+            listSel:["上海","北京","杭州","深圳","广州"],
+            res:"上海",
+        }
+    })
+</script>
+</body>
+</html>

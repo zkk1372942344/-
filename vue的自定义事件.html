@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+<div class="app">
+    <button v-m="2">sssssssssss</button>
+    <p><input type="text" v-m="agg"></p>
+    <p>{{agg}}</p>
+    <p>checkbox:<input type="checkbox" v-c="age"></p>
+    <!--<p v-show="age">wwwwww</p>-->
+    <p>{{age}}</p>
+</div>
+
+<script src="vuejs/vue.js"></script>
+<script>
+    //vue自定义指令模仿的v-model
+    //也可以在vue的实例化内部用@input事件来模仿v-model指令
+
+    Vue.directive("m",{
+        bind(el,binding,vnode){
+            //创建节点元素但是没有添加的时候触发
+            console.log(binding.value,"----binding事件");
+            el.value=binding.value;
+            el.addEventListener("input",function(){
+                vnode.context[binding.expression]=this.value;
+            })
+        },
+        insted(el){
+            //此时已经创建了相应的元素了只需要将相应的元素插入到父节点中，此时还没有插入到父节点中可能访问不到父节点
+            console.log(el.parentNode,"----insted");
+        },
+        update(el,binding,vnode){
+            el.value=binding.value;
+            //vnode的content同此处的app相同
+            console.log(vnode.context);
+            console.log(binding.expression);
+            console.log(vnode.context[binding.expression]);
+        },
+        conponentUpdatd(el){
+            //指定的元素在更新的时候触发，
+        },
+        unbind(el){
+            //只调用一次指令在与元素解绑的时候触发
+            //例如在删除此节点的时候
+        }
+
+    });
+    //vue模仿的checkbox
+    Vue.directive("c",{
+        bind(el,binding,vnode){
+//            console.log(el.value);
+            el.addEventListener("input",function(){
+                console.log(el.value);
+                vnode.context[binding.expression] ? vnode.context[binding.expression]=false : vnode.context[binding.expression]=true;
+            })
+        }
+    });
+    //vue模仿的v-model在input中的checked事件
+    Vue.directive("check",{
+        bind(el,binding,vnode){
+
+            //判断条件
+            if(binding.value.constructor!==Array){
+
+                el.checked=binding.value;
+                el.onchange=function(){
+                    vnode.context.flag=this.checked;
+                }
+            }else{
+                el.checked=binding.value.indexOf(el.value)>-1;
+
+                el.onchange=function(){
+                    if(this.checked){
+                        vnode.context.flag.push(this.value);
+                    }else{
+//                        vnode.context.flag.splice(vode.context.flag.indexOf(this.value),1);
+                        var index = vnode.context.flag.indexOf(this.value);
+                        vnode.context.flag.splice(index,1);
+                    }
+                }
+            }
+        },
+        update(el,binding){
+            if(binding.value.constructor!==Array){
+                el.checked=bind.value;
+            }else{
+                el.checked=binding.value.indexOf(el.value)>-1;
+            }
+        }
+    });
+    //vue模仿的懒加载事件
+    Vue.directive("lazy",{
+        bind(el,binding){
+            //绑定dom二级事件方便解除事件的绑定
+            function lazyFn(){
+                if(document.documentElement.scrollTop+window.innerHeight>el.offsetTop){
+                    el.src=binding.value;
+                    window.removeEventListener("scroll",lazyFn);
+                }
+            }
+            window.addEventListener("scroll",lazyFn)
+        }
+    });
+    //实例化vue
+    var app = new Vue({
+        el:".app",
+        data:{
+            agg:"",
+            age:[],
+        }
+    })
+</script>
+</body>
+</html>

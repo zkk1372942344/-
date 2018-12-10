@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+<div class="app">
+    <select v-model="pro">
+        <option v-for="(item,i) in area">{{i}}</option>
+    </select>
+    <select v-model="city">
+        <option v-for="(a,j) in area[pro][0]">{{j}}</option>
+    </select>
+    <select>
+        <option v-for="b in area[pro][0][city]">{{Object.keys(b)[0]}}</option>
+    </select>
+</div>
+<script src="vuejs/vue.js"></script>
+<script src="vuejs/area.js"></script>
+<script>
+    var app = new Vue({
+        el: ".app",
+        data: {
+            area,
+            pro:"河南省",
+            city:"郑州市",
+            dis:"中原区"
+        },
+        watch:{
+            pro(){
+                this.city=Object.keys(this.area[this.pro][0])[0];
+                this.dis=Object.keys(this.area[this.pro][0][this.city][0])[0];
+            },
+            city(){
+                this.dis=Object.keys(this.area[this.pro][0][this.city][0])[0];
+            }
+        }
+    })
+</script>
+</body>
+</html>

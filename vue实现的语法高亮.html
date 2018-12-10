@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        /*清除浏览器的默认样式*/
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        /*内容的样式*/
+        pre{
+            font-size:16px;
+            position: absolute;
+            top:0;
+            left:0;
+        }
+        #txt{
+            width:500px;
+            height:300px;
+            display: block;
+            position: absolute;
+            left:0;
+            top:0;
+            font-size:16px;
+            color:rgba(0,0,0,0);
+        }
+        .function_code,.var_code{
+            color:#03a9f4;
+            font-weight: bolder
+        }
+        .include_code{
+            color:green;
+        }
+        .name_code{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <textarea name="" id="txt" cols="30" rows="10" v-model="str"></textarea>
+    <pre><code v-html="res"></code></pre>
+</div>
+<!--vuejs-->
+<script src="vuejs/vue.js"></script>
+<script>
+    //实例化vue
+    var app = new Vue({
+        el:"#app",
+        data:{
+            str:"",
+        },
+        computed:{
+            res(){
+                let res=this.str;
+
+                //正则匹配
+                res = res.replace(/function\s(.+?)\(\)/g,function(a,b){
+                    return `function<span class="name_code">${b}</span>()`;
+                });
+                res = res.replace(/(function|var|let)/g,function(a){
+                    return `<span class="${a+'_code'}">${a}</span>`
+                });
+                res = res.replace(/\(\)/g,function(a){
+                    return `<span class="include_code">${a}</span>`
+                });
+                return res;
+            }
+        }
+    })
+</script>
+</body>
+</html>
